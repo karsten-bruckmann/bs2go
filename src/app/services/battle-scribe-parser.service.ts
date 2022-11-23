@@ -30,7 +30,7 @@ export class BattleScribeParserService {
     const forces: Force[] = [];
     doc
       .querySelectorAll('body.battlescribe > div.battlescribe > ul > li.force')
-      .forEach((node) => {
+      .forEach(node => {
         const force: Force = {
           name: this.cleanText(
             node.querySelector(':scope > h2')?.textContent || ''
@@ -44,7 +44,7 @@ export class BattleScribeParserService {
 
   private getCategories(forceNode: Element): Category[] {
     const categories: Category[] = [];
-    forceNode.querySelectorAll(':scope > ul li.category').forEach((node) => {
+    forceNode.querySelectorAll(':scope > ul li.category').forEach(node => {
       const category: Category = {
         name: this.cleanText(node.querySelector('h3')?.textContent || ''),
         sections: this.getSections(node),
@@ -56,7 +56,7 @@ export class BattleScribeParserService {
 
   private getSections(categoryNode: Element): Section[] {
     const textItems: Section[] = [];
-    categoryNode.querySelectorAll(':scope > ul > li').forEach((node) => {
+    categoryNode.querySelectorAll(':scope > ul > li').forEach(node => {
       textItems.push({
         name: this.cleanText(node.querySelector('h4')?.textContent || ''),
         sections: this.getSections(node),
@@ -69,7 +69,7 @@ export class BattleScribeParserService {
 
   private getTextItems(sectionNode: Element): string[] {
     const textItems: string[] = [];
-    sectionNode.querySelectorAll(':scope > p').forEach((node) => {
+    sectionNode.querySelectorAll(':scope > p').forEach(node => {
       textItems.push(node.innerHTML);
     });
     return textItems;
@@ -77,7 +77,7 @@ export class BattleScribeParserService {
 
   private getTables(sectionNode: Element): Table[] {
     const tables: Table[] = [];
-    sectionNode.querySelectorAll(':scope > table').forEach((node) => {
+    sectionNode.querySelectorAll(':scope > table').forEach(node => {
       const name = this.cleanText(node.querySelector('th')?.textContent || '');
       tables.push({
         name,
@@ -90,7 +90,7 @@ export class BattleScribeParserService {
 
   private getTableHeader(tableNode: Element): string[] {
     const header: string[] = [];
-    tableNode.querySelectorAll('th').forEach((node) => {
+    tableNode.querySelectorAll('th').forEach(node => {
       header.push(this.cleanText(node.textContent || ''));
     });
     return header;
@@ -98,9 +98,9 @@ export class BattleScribeParserService {
 
   private getTableRows(tableNode: Element): string[][] {
     const rows: string[][] = [];
-    tableNode.querySelectorAll('tr').forEach((rowNode) => {
+    tableNode.querySelectorAll('tr').forEach(rowNode => {
       const row: string[] = [];
-      rowNode.querySelectorAll('td').forEach((cellNode) => {
+      rowNode.querySelectorAll('td').forEach(cellNode => {
         row.push(this.cleanText(cellNode.textContent || ''));
       });
       if (row.length > 0) {

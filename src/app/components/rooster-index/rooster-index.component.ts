@@ -21,7 +21,7 @@ export class RoosterIndexComponent {
 
   public rooster$ = this.state.rooster$.pipe(
     filter((r): r is string => !!r),
-    switchMap((rooster) => this.roostersService.rooster$(rooster))
+    switchMap(rooster => this.roostersService.rooster$(rooster))
   );
 
   public async showSection(

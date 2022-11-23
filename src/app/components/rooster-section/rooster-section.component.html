@@ -10,16 +10,13 @@
 <div class="sub-sections" *ngIf="section.sections.length > 0">
   <app-rooster-section
     *ngFor="let item of section.sections"
-    [section]="item"
-  ></app-rooster-section>
+    [section]="item"></app-rooster-section>
 </div>
 
 <app-rooster-text-item
   *ngFor="let item of section.textItems"
-  [textItem]="item"
-></app-rooster-text-item>
+  [textItem]="item"></app-rooster-text-item>
 
 <app-rooster-table
   *ngFor="let table of section.tables"
-  [table]="table"
-></app-rooster-table>
+  [table]="table"></app-rooster-table>

@@ -8,8 +8,7 @@
   [initialBreakpoint]="1"
   [breakpoints]="[0, 1]"
   trigger="list-button"
-  #modal
->
+  #modal>
   <ng-template>
     <ion-header *ngIf="rooster$ | async as rooster">
       <ion-toolbar>
@@ -28,8 +27,7 @@
         (sectionSelected)="
           modal.dismiss();
           showSection(force.name, $event.category, $event.section)
-        "
-      ></app-rooster-index-force>
+        "></app-rooster-index-force>
     </ion-content>
   </ng-template>
 </ion-modal>

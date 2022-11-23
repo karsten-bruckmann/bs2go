@@ -28,16 +28,16 @@ export class RoosterComponent {
   public sheet$ = this.state.sheet$;
   public rooster$ = this.state.rooster$.pipe(
     filter((r): r is string => !!r),
-    switchMap((rooster) => this.roostersService.rooster$(rooster))
+    switchMap(rooster => this.roostersService.rooster$(rooster))
   );
   public section$ = combineLatest([this.rooster$, this.sheet$]).pipe(
     map(([rooster, sheet]) =>
       !rooster || !sheet || sheet.type !== 'section'
         ? null
         : rooster.forces
-            .find((f) => f.name === sheet.force)
-            ?.categories.find((c) => c.name === sheet.category)
-            ?.sections.find((s) => s.name === sheet.section)
+            .find(f => f.name === sheet.force)
+            ?.categories.find(c => c.name === sheet.category)
+            ?.sections.find(s => s.name === sheet.section)
     )
   );
 }

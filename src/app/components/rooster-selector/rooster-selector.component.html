@@ -8,8 +8,7 @@
   [initialBreakpoint]="1"
   [breakpoints]="[0, 1]"
   trigger="select-button"
-  #modal
->
+  #modal>
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -27,8 +26,7 @@
           <ion-icon
             color="primary"
             slot="start"
-            name="document-outline"
-          ></ion-icon>
+            name="document-outline"></ion-icon>
           Neue Datei
         </ion-label>
         <ion-button fill="outline" (click)="f.click()">wählen...</ion-button>
@@ -37,8 +35,7 @@
           class="ion-hide"
           #f
           type="file"
-          accept="text/html"
-        />
+          accept="text/html" />
       </ion-item>
       <ion-item *ngFor="let rooster of roosterTitles$ | async">
         <ion-label (click)="selectRooster(rooster)">
@@ -47,8 +44,7 @@
             slot="start"
             [name]="
               'open' + ((roosterSelected | async) === rooster ? '' : '-outline')
-            "
-          ></ion-icon>
+            "></ion-icon>
           {{ rooster }}
         </ion-label>
         <ion-button slot="end" fill="clear" (click)="deleteRooster(rooster)">

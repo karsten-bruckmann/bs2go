@@ -16,12 +16,12 @@ export class RoostersService {
   );
 
   public readonly titles$: Observable<string[]> = this.roosters$.pipe(
-    map((roosters) => roosters.map((rooster) => rooster.title))
+    map(roosters => roosters.map(rooster => rooster.title))
   );
 
   public rooster$(title: string): Observable<Rooster | undefined> {
     return this.roosters$.pipe(
-      map((files) => files.find((file) => file.title === title))
+      map(files => files.find(file => file.title === title))
     );
   }
 
@@ -36,7 +36,7 @@ export class RoostersService {
   }
 
   public delete(title: string): void {
-    const files = this._roosters$.value.filter((file) => file.title !== title);
+    const files = this._roosters$.value.filter(file => file.title !== title);
     this._roosters$.next(files);
     localStorage.setItem('roosters', JSON.stringify(files));
   }
