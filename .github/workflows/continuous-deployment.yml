@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  ci:
+  cd:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,16 +35,16 @@ jobs:
 
       - name: Build
         run: |
-          ng build --prod
+          npx ng build --prod
 
       - name: Lint
         run: |
-          ng lint
+          npx ng lint
 
       - name: Test
         run: |
-          ng test --prod
+          npx ng test --prod
 
       - name: Deploy
         run: |
-          ng deploy --base-href=/bs2go/
+          npx ng deploy --base-href=/bs2go/
