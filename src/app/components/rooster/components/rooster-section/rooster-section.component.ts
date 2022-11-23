@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Section } from '../../models/rooster.model';
+import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { RoosterTextItemComponent } from '../rooster-text-item/rooster-text-item.component';
+import { Section } from '../../../../models/rooster.model';
 import { RoosterTableComponent } from '../rooster-table/rooster-table.component';
+import { RoosterTextItemComponent } from '../rooster-text-item/rooster-text-item.component';
 
 @Component({
-  selector: 'app-rooster-section',
+  selector: 'rooster-section',
   standalone: true,
   imports: [
     CommonModule,

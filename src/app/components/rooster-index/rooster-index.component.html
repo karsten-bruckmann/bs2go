@@ -21,19 +21,35 @@
       </ion-toolbar>
     </ion-header>
     <ion-content *ngIf="rooster$ | async as rooster" class="ion-padding">
-      <app-rooster-index-force
-        *ngFor="let force of rooster.forces"
-        [force]="force"
-        (sectionSelected)="
-          modal.dismiss();
-          showSection(force.name, $event.category, $event.section)
-        "></app-rooster-index-force>
-      <app-rooster-index-summary
-        *ngFor="let summary of rooster.summaries"
-        [summary]="summary"
-        (click)="
-          modal.dismiss(); showSummary(summary.name)
-        "></app-rooster-index-summary>
+      <div class="force" *ngFor="let force of rooster.forces">
+        <ion-text color="primary">
+          <h2>{{ force.name }}</h2>
+        </ion-text>
+        <div class="category" *ngFor="let category of force.categories">
+          <ion-text color="primary">
+            <h3>{{ category.name }}</h3>
+          </ion-text>
+          <div
+            class="section"
+            *ngFor="let section of category.sections"
+            (click)="
+              showSection(force.name, category.name, section.name);
+              modal.dismiss()
+            ">
+            <ion-text color="primary">
+              <h4>{{ section.name }}</h4>
+            </ion-text>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary" *ngFor="let summary of rooster.summaries">
+        <ion-text
+          color="primary"
+          (click)="modal.dismiss(); showSummary(summary.name)">
+          <h2>{{ summary.name }}</h2>
+        </ion-text>
+      </div>
     </ion-content>
   </ng-template>
 </ion-modal>

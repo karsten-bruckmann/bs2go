@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-rooster-text-item',
+  selector: 'rooster-text-item',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './rooster-text-item.component.html',
