@@ -14,9 +14,8 @@ jobs:
         with:
           node-version: 16
 
-      - name: Cache node modules
+      - uses: actions/cache@v2
         id: cache-nodemodules
-        uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
@@ -28,27 +27,10 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install Dependencies
+      - run: npm ci
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: |
-          npm ci
-
-      - name: Format
-        run: |
-          npx prettier --check .
-
-      - name: Lint
-        run: |
-          npx ng lint
-
-      - name: Build
-        run: |
-          npx ng build
-
-      - name: Test
-        run: |
-          npx ng test
-
-      - name: Deploy
-        run: |
-          npx ng deploy --base-href=/bs2go/
+      - run: npx prettier --check .
+      - run: npx ng lint
+      - run: npx ng build
+      # - run: npx ng test
+      # - run: npx ng deploy --base-href=/bs2go/
