@@ -34,3 +34,5 @@ jobs:
       - run: npx ng build
       # - run: npx ng test
       - run: npx ng deploy --base-href=/bs2go/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
