@@ -32,6 +32,11 @@ jobs:
       - run: npx prettier --check .
       - run: npx ng lint
       # - run: npx ng test
-      - run: npx ng deploy --base-href=/bs2go/ --no-silent
+      - run: |
+          npx ng deploy \
+            --base-href=/bs2go/ \
+            --no-silent \
+            --name="Github Action" \
+            --email="action@test.de"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
