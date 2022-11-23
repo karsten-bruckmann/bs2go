@@ -2,6 +2,6 @@
   <ion-content [forceOverscroll]="false">
     <app-rooster></app-rooster>
   </ion-content>
-  <app-rooster-selector></app-rooster-selector>
-  <app-rooster-index></app-rooster-index>
+  <app-rooster-selector (roosterSelected)="index.open()"></app-rooster-selector>
+  <app-rooster-index #index></app-rooster-index>
 </ion-app>
