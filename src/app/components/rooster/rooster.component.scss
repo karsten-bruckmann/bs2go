@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  padding-bottom: 80px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px 10px;
+}
+
+h1 {
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+}
+
+h2 {
+  background: var(--ion-color-primary-tint);
+  color: var(--ion-color-primary-contrast);
+}
+
+h3 {
+  background: var(--ion-color-secondary);
+  color: var(--ion-color-secondary-contrast);
+}

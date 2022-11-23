@@ -1,0 +1,9 @@
+<ion-text color="primary">
+  <h3>{{ category.name }}</h3>
+</ion-text>
+
+<app-rooster-index-section
+  *ngFor="let section of category.sections"
+  [section]="section"
+  (click)="sectionSelected.emit(section.name)"
+></app-rooster-index-section>

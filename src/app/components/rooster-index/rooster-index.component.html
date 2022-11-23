@@ -1,0 +1,35 @@
+<ion-fab slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab-button id="list-button">
+    <ion-icon name="list"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-modal
+  [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]"
+  trigger="list-button"
+  #modal
+>
+  <ng-template>
+    <ion-header *ngIf="rooster$ | async as rooster">
+      <ion-toolbar>
+        <ion-title>{{ rooster.title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="modal.dismiss()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content *ngIf="rooster$ | async as rooster" class="ion-padding">
+      <app-rooster-index-force
+        *ngFor="let force of rooster.forces"
+        [force]="force"
+        (sectionSelected)="
+          modal.dismiss();
+          showSection(force.name, $event.category, $event.section)
+        "
+      ></app-rooster-index-force>
+    </ion-content>
+  </ng-template>
+</ion-modal>

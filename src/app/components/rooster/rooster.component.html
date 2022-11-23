@@ -1,0 +1,25 @@
+<ng-container *ngIf="rooster$ | async as rooster">
+  <ion-text color="primary">
+    <h1 id="rooster-title">{{ rooster.title }}</h1>
+    <ion-popover trigger="rooster-title" triggerAction="click">
+      <ng-template>
+        <ion-content class="ion-padding">{{ rooster.title }}</ion-content>
+      </ng-template>
+    </ion-popover>
+  </ion-text>
+
+  <ng-container *ngIf="sheet$ | async as selected">
+    <ng-container *ngIf="selected.type === 'section'">
+      <ion-text color="primary">
+        <h2>{{ selected.force }}</h2>
+      </ion-text>
+      <ion-text color="primary">
+        <h3>{{ selected.category }}</h3>
+      </ion-text>
+
+      <ng-container *ngIf="section$ | async as section">
+        <app-rooster-section [section]="section"></app-rooster-section>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

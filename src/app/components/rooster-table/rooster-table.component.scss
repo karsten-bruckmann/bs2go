@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 0.55px solid var(--ion-color-medium);
+  padding: 5px;
+}
+
+th {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-tertiary-contrast);
+  font-weight: bold;
+  font-family: var(--theme-font);
+}
+
+th:last-child,
+td:last-child {
+  display: none;
+}
