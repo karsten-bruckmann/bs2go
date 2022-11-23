@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Category, Section } from '../../models/rooster.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { Category } from '../../models/rooster.model';
 import { RoosterIndexSectionComponent } from '../rooster-index-section/rooster-index-section.component';
 
 @Component({

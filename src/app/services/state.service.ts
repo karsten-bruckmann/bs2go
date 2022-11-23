@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 export interface SectionSheet {
   type: 'section';

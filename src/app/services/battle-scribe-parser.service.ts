@@ -76,7 +76,7 @@ export class BattleScribeParserService {
   }
 
   private getTables(sectionNode: Element): Table[] {
-    let tables: Table[] = [];
+    const tables: Table[] = [];
     sectionNode.querySelectorAll(':scope > table').forEach((node) => {
       const name = this.cleanText(node.querySelector('th')?.textContent || '');
       tables.push({

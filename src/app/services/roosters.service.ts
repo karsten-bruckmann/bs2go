@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  map,
-  Observable,
-  shareReplay,
-  Subject,
-  tap,
-} from 'rxjs';
-import { BattleScribeFile } from '../models/battle-scribe-file.model';
+import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { Rooster } from '../models/rooster.model';
 import { BattleScribeParserService } from './battle-scribe-parser.service';
 

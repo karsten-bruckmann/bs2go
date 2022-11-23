@@ -1,7 +1,7 @@
-import { Component, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Section } from '../../models/rooster.model';
+import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { Section } from '../../models/rooster.model';
 
 @Component({
   selector: 'app-rooster-index-section',

@@ -1,7 +1,7 @@
-import { Component, HostBinding, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Output } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { ReplaySubject, Observable, firstValueFrom } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
 

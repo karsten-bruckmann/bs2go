@@ -1,13 +1,11 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Rooster, Section } from '../../models/rooster.model';
-import { BattleScribeParserService } from '../../services/battle-scribe-parser.service';
+import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { RoosterIndexForceComponent } from '../rooster-index-force/rooster-index-force.component';
-import { RoosterSectionComponent } from '../rooster-section/rooster-section.component';
+import { combineLatest, filter, map, switchMap } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
-import { combineLatest, filter, firstValueFrom, map, switchMap } from 'rxjs';
+import { RoosterIndexForceComponent } from '../rooster-index-force/rooster-index-force.component';
+import { RoosterSectionComponent } from '../rooster-section/rooster-section.component';
 
 @Component({
   selector: 'app-rooster',
