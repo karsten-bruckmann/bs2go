@@ -29,9 +29,14 @@ jobs:
 
       - run: npm ci
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-      - run: npx prettier --check .
-      - run: npx ng lint
-      - run: npx ng test
+      - run: |
+          npx prettier \
+            --check .
+      - run: |
+          npx ng lint
+      - run: |
+          npx ng test \
+            --watch=false
       - run: |
           npx ng deploy \
             --base-href=/bs2go/ \
