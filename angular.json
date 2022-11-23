@@ -113,12 +113,6 @@
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "battle-cards:build"
-          }
-        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -138,30 +132,6 @@
             ],
             "styles": ["src/styles.scss"],
             "scripts": []
-          }
-        },
-        "ionic-cordova-serve": {
-          "builder": "@ionic/angular-toolkit:cordova-serve",
-          "options": {
-            "cordovaBuildTarget": "battle-cards:ionic-cordova-build",
-            "devServerTarget": "battle-cards:serve"
-          },
-          "configurations": {
-            "production": {
-              "cordovaBuildTarget": "battle-cards:ionic-cordova-build:production",
-              "devServerTarget": "battle-cards:serve:production"
-            }
-          }
-        },
-        "ionic-cordova-build": {
-          "builder": "@ionic/angular-toolkit:cordova-build",
-          "options": {
-            "browserTarget": "battle-cards:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "battle-cards:build:production"
-            }
           }
         },
         "deploy": {

@@ -29,7 +29,11 @@ export class StateService {
 
   public setSheet(sheet: Sheet | undefined) {
     this._sheet$.next(sheet);
-    localStorage.setItem('sheet', JSON.stringify(sheet));
+    if (sheet) {
+      localStorage.setItem('sheet', JSON.stringify(sheet));
+    } else {
+      localStorage.removeItem('sheet');
+    }
   }
 
   private _rooster$ = new BehaviorSubject<string | undefined>(

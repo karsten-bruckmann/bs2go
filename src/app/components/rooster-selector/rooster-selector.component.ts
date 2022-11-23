@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Output } from '@angular/core';
+import { AfterViewInit, Component, Output, ViewChild } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { Observable, ReplaySubject } from 'rxjs';
+import { firstValueFrom, Observable, ReplaySubject } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
 
@@ -12,7 +12,7 @@ import { StateService } from '../../services/state.service';
   templateUrl: './rooster-selector.component.html',
   styleUrls: ['./rooster-selector.component.scss'],
 })
-export class RoosterSelectorComponent {
+export class RoosterSelectorComponent implements AfterViewInit {
   constructor(
     private roostersService: RoostersService,
     private state: StateService,
@@ -25,6 +25,18 @@ export class RoosterSelectorComponent {
     this.selectedRooster$.asObservable();
 
   public roosterTitles$ = this.roostersService.titles$;
+
+  @ViewChild('modal') public modal?: HTMLIonModalElement;
+
+  public async ngAfterViewInit(): Promise<void> {
+    if (!this.modal) {
+      return;
+    }
+    const rooster = await firstValueFrom(this.state.rooster$);
+    if (!rooster) {
+      this.modal.present();
+    }
+  }
 
   public async saveFile(event: Event): Promise<void> {
     const target = event.target as HTMLInputElement;
