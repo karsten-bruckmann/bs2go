@@ -33,5 +33,11 @@
         <app-rooster-section [section]="section"></app-rooster-section>
       </ng-container>
     </ng-container>
+
+    <ng-container *ngIf="selected.type === 'summary'">
+      <app-rooster-summary
+        *ngIf="summary$ | async as summary"
+        [summary]="summary"></app-rooster-summary>
+    </ng-container>
   </ng-container>
 </ng-container>

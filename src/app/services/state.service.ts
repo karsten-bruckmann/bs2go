@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface SectionSheet {
   type: 'section';
-  rooster: string;
   force: string;
   category: string;
   section: string;
@@ -11,11 +10,10 @@ export interface SectionSheet {
 
 export interface SummarySheet {
   type: 'summary';
-  rooster: string;
   summary: string;
 }
 
-export type Sheet = SectionSheet | SummarySheet;
+export type Sheet = { rooster: string } & (SectionSheet | SummarySheet);
 
 @Injectable({ providedIn: 'root' })
 export class StateService {

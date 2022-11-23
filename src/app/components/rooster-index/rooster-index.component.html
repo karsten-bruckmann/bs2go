@@ -28,6 +28,12 @@
           modal.dismiss();
           showSection(force.name, $event.category, $event.section)
         "></app-rooster-index-force>
+      <app-rooster-index-summary
+        *ngFor="let summary of rooster.summaries"
+        [summary]="summary"
+        (click)="
+          modal.dismiss(); showSummary(summary.name)
+        "></app-rooster-index-summary>
     </ion-content>
   </ng-template>
 </ion-modal>

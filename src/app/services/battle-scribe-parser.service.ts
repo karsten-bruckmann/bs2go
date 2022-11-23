@@ -4,6 +4,7 @@ import {
   Force,
   Rooster,
   Section,
+  Summary,
   Table,
 } from '../models/rooster.model';
 
@@ -11,11 +12,11 @@ import {
 export class BattleScribeParserService {
   public parse(html: string): Rooster {
     const doc = new DOMParser().parseFromString(html, 'text/html');
-    console.log(doc.body);
 
     return {
       title: this.getTitle(doc),
       forces: this.getForces(doc),
+      summaries: this.getSummaries(doc),
     };
   }
 
@@ -40,6 +41,24 @@ export class BattleScribeParserService {
         forces.push(force);
       });
     return forces;
+  }
+
+  private getSummaries(doc: Document): Summary[] {
+    const summaries: Summary[] = [];
+    doc
+      .querySelectorAll('body.battlescribe > div.battlescribe > div.summary')
+      .forEach(summaryNode => {
+        const summary: Summary = {
+          name: this.cleanText(
+            summaryNode.querySelector(':scope > h2')?.textContent || ''
+          ),
+          textItems: this.getTextItems(summaryNode).map(text =>
+            this.cleanText(text)
+          ),
+        };
+        summaries.push(summary);
+      });
+    return summaries;
   }
 
   private getCategories(forceNode: Element): Category[] {

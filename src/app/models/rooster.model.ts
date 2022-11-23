@@ -1,6 +1,12 @@
 export interface Rooster {
   title: string;
   forces: Force[];
+  summaries: Summary[];
+}
+
+export interface Summary {
+  name: string;
+  textItems: string[];
 }
 
 export interface Force {
