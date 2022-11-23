@@ -162,6 +162,12 @@
               "browserTarget": "battle-cards:build:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "": "dist/battle-cards"
+          }
         }
       }
     }
