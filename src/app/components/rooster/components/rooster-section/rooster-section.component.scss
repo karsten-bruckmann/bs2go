@@ -1,5 +1,6 @@
 :host {
   display: block;
+  flex-basis: 100%;
 }
 
 h4 {
@@ -11,18 +12,17 @@ h4 {
   padding: 10px;
 }
 
-.sub-sections {
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 0;
-  overflow-x: auto;
-
-  app-rooster-section {
+:host-context(rooster-section) {
+  :host {
     margin: 5px;
     background: var(--ion-color-light);
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 0;
   }
+  h4 {
+    white-space: normal;
+  }
+}
+
+.sub-sections {
+  display: flex;
+  overflow-x: auto;
 }
