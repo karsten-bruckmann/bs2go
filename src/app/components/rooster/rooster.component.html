@@ -11,10 +11,22 @@
   <ng-container *ngIf="sheet$ | async as selected">
     <ng-container *ngIf="selected.type === 'section'">
       <ion-text color="primary">
-        <h2>{{ selected.force }}</h2>
+        <h2 id="force-title">{{ selected.force }}</h2>
+        <ion-popover trigger="force-title" triggerAction="click">
+          <ng-template>
+            <ion-content class="ion-padding">{{ selected.force }}</ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-text>
       <ion-text color="primary">
-        <h3>{{ selected.category }}</h3>
+        <h3 id="category-title">{{ selected.category }}</h3>
+        <ion-popover trigger="category-title" triggerAction="click">
+          <ng-template>
+            <ion-content class="ion-padding">{{
+              selected.category
+            }}</ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-text>
 
       <ng-container *ngIf="section$ | async as section">

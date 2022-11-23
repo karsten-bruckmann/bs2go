@@ -1,5 +1,10 @@
-<ion-text color="primary">
+<ion-text id="section-title" color="primary">
   <h4>{{ section.name }}</h4>
+  <ion-popover trigger="section-title" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">{{ section.name }}</ion-content>
+    </ng-template>
+  </ion-popover>
 </ion-text>
 
 <div class="sub-sections" *ngIf="section.sections.length > 0">
