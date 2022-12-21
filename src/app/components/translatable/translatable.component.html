@@ -1,0 +1,32 @@
+<span
+  [innerHTML]="content"
+  (dblclick)="changed = false; popover.present()"></span>
+<ion-modal #popover>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="popover.dismiss()">abbrechen</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button
+            (click)="translate(ta.value); popover.dismiss()"
+            [strong]="true"
+            >{{ changed && !ta.value ? 'löschen' : 'OK' }}</ion-button
+          >
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item> {{ original }}</ion-item>
+      <ion-item>
+        <ion-textarea
+          (ionChange)="changed = true"
+          #ta
+          type="text"
+          [value]="translation"></ion-textarea>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

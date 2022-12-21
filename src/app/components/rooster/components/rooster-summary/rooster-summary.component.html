@@ -1,10 +1,5 @@
 <ion-text id="summary-title" color="primary">
-  <h2>{{ summary.name }}</h2>
-  <ion-popover trigger="summary-title" triggerAction="click">
-    <ng-template>
-      <ion-content class="ion-padding">{{ summary.name }}</ion-content>
-    </ng-template>
-  </ion-popover>
+  <h2><app-translatable [text]="summary.name"></app-translatable></h2>
 </ion-text>
 
 <rooster-text-item

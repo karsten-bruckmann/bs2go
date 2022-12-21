@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { combineLatest, filter, map, switchMap } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
+import { TranslatableComponent } from '../translatable/translatable.component';
 import { RoosterSectionComponent } from './components/rooster-section/rooster-section.component';
 import { RoosterSummaryComponent } from './components/rooster-summary/rooster-summary.component';
 
@@ -15,6 +16,7 @@ import { RoosterSummaryComponent } from './components/rooster-summary/rooster-su
     IonicModule,
     RoosterSectionComponent,
     RoosterSummaryComponent,
+    TranslatableComponent,
   ],
   templateUrl: './rooster.component.html',
   styleUrls: ['./rooster.component.scss'],
