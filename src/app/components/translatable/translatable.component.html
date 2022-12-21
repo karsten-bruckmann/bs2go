@@ -1,6 +1,4 @@
-<span
-  [innerHTML]="content"
-  (dblclick)="changed = false; popover.present()"></span>
+<span [innerHTML]="content" (click)="changed = false; popover.present()"></span>
 <ion-modal #popover>
   <ng-template>
     <ion-header>
