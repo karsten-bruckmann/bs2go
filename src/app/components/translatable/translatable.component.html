@@ -1,30 +1,31 @@
-<span [innerHTML]="content" (click)="changed = false; popover.present()"></span>
-<ion-modal #popover>
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button (click)="popover.dismiss()">abbrechen</ion-button>
-        </ion-buttons>
-        <ion-title>Übersetzen</ion-title>
-        <ion-buttons slot="end">
-          <ion-button
-            (click)="translate(ta.value); popover.dismiss()"
-            [strong]="true"
-            >{{ changed && !ta.value ? 'löschen' : 'OK' }}</ion-button
-          >
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-item> {{ original }}</ion-item>
-      <ion-item>
-        <ion-textarea
-          (ionChange)="changed = true"
-          #ta
-          type="text"
-          [value]="translation"></ion-textarea>
-      </ion-item>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+<ng-container *ngFor="let item of translation$ | async">
+  <span [innerHTML]="item.safeContent" (click)="popover.present()"></span>
+  <ion-modal #popover>
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="popover.dismiss()">abbrechen</ion-button>
+          </ion-buttons>
+          <ion-title>Übersetzen</ion-title>
+          <ion-buttons slot="end">
+            <ion-button
+              (click)="translate(item.original, ta.value); popover.dismiss()"
+              [strong]="true"
+              >OK</ion-button
+            >
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item> {{ item.original }}</ion-item>
+        <ion-item>
+          <ion-textarea
+            #ta
+            type="text"
+            [value]="item.translated"></ion-textarea>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ng-container>

@@ -5,6 +5,8 @@
     </th>
   </tr>
   <tr *ngFor="let row of table.rows">
-    <td *ngFor="let cell of row">{{ cell }}</td>
+    <td *ngFor="let cell of row">
+      <app-translatable [text]="cell"></app-translatable>
+    </td>
   </tr>
 </table>
