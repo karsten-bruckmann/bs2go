@@ -14,27 +14,6 @@
       <ion-toolbar>
         <ion-title>BattleScribe 2Go</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="selectLanguage()">
-            {{ selectedFlag$ | async }}
-          </ion-button>
-          <ion-toggle
-            #tt
-            [checked]="state.translationsEditMode$ | async"
-            (ionChange)="
-              state.setTranslationsEditMode(tt.checked)
-            "></ion-toggle>
-          <ion-button (click)="exportTranslations()">
-            <ion-icon name="save-outline"></ion-icon>
-          </ion-button>
-          <ion-button (click)="i.click()">
-            <ion-icon name="folder-open-outline"></ion-icon>
-          </ion-button>
-          <input
-            (change)="importTranslations($event)"
-            class="ion-hide"
-            #i
-            type="file"
-            accept="application/json" />
           <ion-button (click)="modal.dismiss()">
             <ion-icon name="close"></ion-icon>
           </ion-button>
@@ -73,5 +52,7 @@
         </ion-button>
       </ion-item>
     </ion-content>
+
+    <app-translation-config></app-translation-config>
   </ng-template>
 </ion-modal>

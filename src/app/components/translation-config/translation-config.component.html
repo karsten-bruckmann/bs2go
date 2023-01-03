@@ -1,0 +1,39 @@
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Übersetzen</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button (click)="selectLanguage()">
+        {{ selectedFlag$ | async }}
+      </ion-button>
+      <span>
+        <ion-button (click)="exportTranslations()">
+          <ion-icon name="save-outline"></ion-icon>
+        </ion-button>
+        <ion-label>Export</ion-label>
+      </span>
+      <span>
+        <ion-button (click)="i.click()">
+          <ion-icon name="folder-open-outline"></ion-icon>
+        </ion-button>
+        <ion-label>Import</ion-label>
+        <input
+          (change)="importTranslations($event)"
+          class="ion-hide"
+          #i
+          type="file"
+          accept="application/json" />
+      </span>
+      <span>
+        <ion-toggle
+          #tt
+          [checked]="state.translationsEditMode$ | async"
+          (ionChange)="state.setTranslationsEditMode(tt.checked)"
+          ><ion-icon name="edit"></ion-icon
+        ></ion-toggle>
+        <ion-label>Bearbeiten</ion-label>
+      </span>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

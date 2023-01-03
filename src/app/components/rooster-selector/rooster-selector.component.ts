@@ -1,19 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, Output, ViewChild } from '@angular/core';
-import {
-  ActionSheetController,
-  IonicModule,
-  ModalController,
-} from '@ionic/angular';
-import { firstValueFrom, map, Observable, ReplaySubject } from 'rxjs';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { firstValueFrom, Observable, ReplaySubject } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
-import { TranslationsService } from '../../services/translations.service';
+import { TranslationConfigComponent } from '../translation-config/translation-config.component';
 
 @Component({
   selector: 'app-rooster-selector',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, TranslationConfigComponent],
   templateUrl: './rooster-selector.component.html',
   styleUrls: ['./rooster-selector.component.scss'],
 })
@@ -21,17 +17,11 @@ export class RoosterSelectorComponent implements AfterViewInit {
   constructor(
     private roostersService: RoostersService,
     public state: StateService,
-    private modalController: ModalController,
-    private translationsService: TranslationsService,
-    private actionSheetCtrl: ActionSheetController
+    private modalController: ModalController
   ) {}
 
   public roosterTitles$ = this.roostersService.titles$;
   public selectedRooster$: ReplaySubject<string> = new ReplaySubject(1);
-  public flags = this.translationsService.languages;
-  public selectedFlag$ = this.translationsService.selectedLanguage$.pipe(
-    map(language => this.flags[language].flag)
-  );
 
   @Output() public roosterSelected: Observable<string> =
     this.selectedRooster$.asObservable();
@@ -70,39 +60,5 @@ export class RoosterSelectorComponent implements AfterViewInit {
     this.selectedRooster$.next(title);
     this.state.setRooster(title);
     this.modalController.dismiss();
-  }
-
-  public async selectLanguage(): Promise<void> {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Sprache wählen',
-      buttons: Object.keys(this.flags).map(flag => ({
-        text:
-          this.flags[flag as keyof typeof this.flags].flag +
-          ' ' +
-          this.flags[flag as keyof typeof this.flags].name,
-        handler: () => {
-          this.translationsService.setLanguage(flag as keyof typeof this.flags);
-        },
-      })),
-    });
-
-    actionSheet.present();
-  }
-
-  public exportTranslations(): void {
-    this.translationsService.export();
-  }
-
-  public async importTranslations(event: Event): Promise<void> {
-    const target = event.target as HTMLInputElement;
-    const files = target.files;
-    if (!target || !files) {
-      return;
-    }
-    const file: File = files[0];
-    if (!file) {
-      return;
-    }
-    this.translationsService.import(file);
   }
 }

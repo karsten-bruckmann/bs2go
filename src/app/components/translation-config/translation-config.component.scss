@@ -1,0 +1,16 @@
+ion-footer {
+  ion-toolbar {
+    ion-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+  }
+}
