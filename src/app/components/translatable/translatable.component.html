@@ -1,9 +1,9 @@
 <ng-container *ngFor="let item of translation$ | async">
   <span
-    *ngIf="(editable$ | async) === false"
+    *ngIf="(editable$ | async) === false || item.editable === false"
     [innerHTML]="item.safeContent"></span>
   <span
-    *ngIf="(editable$ | async) === true"
+    *ngIf="(editable$ | async) === true && item.editable === true"
     [innerHTML]="item.safeContent"
     (click)="translateOnClick && popover.present()"></span>
   <ion-modal #popover>

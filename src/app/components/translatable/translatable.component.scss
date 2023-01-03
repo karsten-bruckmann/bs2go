@@ -1,5 +1,6 @@
 :host {
-  display: block;
+  display: inline-block;
+  // margin-right: 5px;
 }
 
 span:not(:first-of-type) {

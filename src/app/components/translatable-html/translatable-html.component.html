@@ -1,0 +1,24 @@
+<app-translatable-html
+  *ngFor="let node of childNodes"
+  [text]="node"></app-translatable-html>
+
+<ng-container *ngFor="let split of splitNodes" class="split-node">
+  <app-translatable
+    *ngIf="isTranslatable(split); else textSpacer"
+    class="split-node"
+    [text]="split"></app-translatable>
+  <ng-template #textSpacer>{{ split }} </ng-template>
+</ng-container>
+
+<app-translatable *ngIf="textNode" [text]="textNode"></app-translatable>
+
+<ng-container *ngIf="htmlNode as node" [ngSwitch]="node.tagName">
+  <span [ngClass]="node.classes" *ngSwitchCase="'SPAN'">
+    <ng-container *ngFor="let text of node.splitNodes">
+      <app-translatable
+        *ngIf="isTranslatable(text); else spacer"
+        [text]="text"></app-translatable>
+      <ng-template #spacer>{{ text }} </ng-template>
+    </ng-container>
+  </span>
+</ng-container>

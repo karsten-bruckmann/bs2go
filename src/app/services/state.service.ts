@@ -61,7 +61,6 @@ export class StateService {
   }
 
   public setTranslationsEditMode(enabled: boolean) {
-    console.log(enabled);
     this._translationsEditMode$.next(enabled);
     if (enabled) {
       localStorage.setItem('translationsEditMode', 'enabled');
