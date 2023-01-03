@@ -5,3 +5,11 @@
 span:not(:first-of-type) {
   padding-left: 5px;
 }
+
+ion-textarea {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--ion-color-medium);
+  color: 1px solid var(--ion-color-dark);
+  font-family: monospace;
+}

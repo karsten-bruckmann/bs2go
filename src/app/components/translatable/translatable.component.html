@@ -24,11 +24,11 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-item> {{ item.original }}</ion-item>
-        <ion-item>
+        <ion-item lines="none"> {{ item.original }}</ion-item>
+        <ion-item lines="none">
           <ion-textarea
             #ta
-            type="text"
+            [autoGrow]="true"
             [value]="item.translated"></ion-textarea>
         </ion-item>
       </ion-content>
