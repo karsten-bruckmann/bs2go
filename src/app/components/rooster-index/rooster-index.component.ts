@@ -4,11 +4,12 @@ import { IonicModule } from '@ionic/angular';
 import { filter, firstValueFrom, switchMap } from 'rxjs';
 import { RoostersService } from '../../services/roosters.service';
 import { StateService } from '../../services/state.service';
+import { TranslatableComponent } from '../translatable/translatable.component';
 
 @Component({
   selector: 'app-rooster-index',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, TranslatableComponent],
   templateUrl: './rooster-index.component.html',
   styleUrls: ['./rooster-index.component.scss'],
 })

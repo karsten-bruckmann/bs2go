@@ -12,7 +12,11 @@
   <ng-template>
     <ion-header *ngIf="rooster$ | async as rooster">
       <ion-toolbar>
-        <ion-title>{{ rooster.title }}</ion-title>
+        <ion-title
+          ><app-translatable
+            [text]="rooster.title"
+            [translateOnClick]="false"></app-translatable
+        ></ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="modal.dismiss()">
             <ion-icon name="close"></ion-icon>
@@ -23,11 +27,19 @@
     <ion-content *ngIf="rooster$ | async as rooster" class="ion-padding">
       <div class="force" *ngFor="let force of rooster.forces">
         <ion-text color="primary">
-          <h2>{{ force.name }}</h2>
+          <h2>
+            <app-translatable
+              [text]="force.name"
+              [translateOnClick]="false"></app-translatable>
+          </h2>
         </ion-text>
         <div class="category" *ngFor="let category of force.categories">
           <ion-text color="primary">
-            <h3>{{ category.name }}</h3>
+            <h3>
+              <app-translatable
+                [text]="category.name"
+                [translateOnClick]="false"></app-translatable>
+            </h3>
           </ion-text>
           <div
             class="section"
@@ -37,7 +49,11 @@
               modal.dismiss()
             ">
             <ion-text color="primary">
-              <h4>{{ section.name }}</h4>
+              <h4>
+                <app-translatable
+                  [text]="section.name"
+                  [translateOnClick]="false"></app-translatable>
+              </h4>
             </ion-text>
           </div>
         </div>
@@ -47,7 +63,11 @@
         <ion-text
           color="primary"
           (click)="modal.dismiss(); showSummary(summary.name)">
-          <h2>{{ summary.name }}</h2>
+          <h2>
+            <app-translatable
+              [text]="summary.name"
+              [translateOnClick]="false"></app-translatable>
+          </h2>
         </ion-text>
       </div>
     </ion-content>

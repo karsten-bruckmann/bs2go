@@ -1,5 +1,7 @@
 <ng-container *ngFor="let item of translation$ | async">
-  <span [innerHTML]="item.safeContent" (click)="popover.present()"></span>
+  <span
+    [innerHTML]="item.safeContent"
+    (click)="translateOnClick && popover.present()"></span>
   <ion-modal #popover>
     <ng-template>
       <ion-header>
