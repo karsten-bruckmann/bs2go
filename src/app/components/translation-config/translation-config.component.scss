@@ -1,5 +1,9 @@
 ion-footer {
   ion-toolbar {
+    &:last-of-type {
+      padding-bottom: 50px;
+    }
+
     ion-buttons {
       width: 100%;
       display: flex;
