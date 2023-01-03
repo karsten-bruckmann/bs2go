@@ -23,6 +23,18 @@
             (ionChange)="
               state.setTranslationsEditMode(tt.checked)
             "></ion-toggle>
+          <ion-button (click)="exportTranslations()">
+            <ion-icon name="save-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="i.click()">
+            <ion-icon name="folder-open-outline"></ion-icon>
+          </ion-button>
+          <input
+            (change)="importTranslations($event)"
+            class="ion-hide"
+            #i
+            type="file"
+            accept="application/json" />
           <ion-button (click)="modal.dismiss()">
             <ion-icon name="close"></ion-icon>
           </ion-button>

@@ -79,14 +79,16 @@ export class TranslationsService {
 
   public async translate(
     original: string,
-    translation: string | null
+    translation: string | null,
+    translationLanguage?: keyof Translations
   ): Promise<void> {
     const translatable = await firstValueFrom(this.translatable$);
     if (!translatable) {
       return;
     }
 
-    const language = await firstValueFrom(this.selectedLanguage$);
+    const language =
+      translationLanguage || (await firstValueFrom(this.selectedLanguage$));
 
     if (!translation || original === translation) {
       localStorage.removeItem(`translation-${Md5.hashStr(original)}`);
@@ -106,7 +108,30 @@ export class TranslationsService {
     this._updatedTexts$.next(original);
   }
 
-  public export(): Record<string, Translations> {
+  public export(): void {
+    const data = this.getAllTranslations();
+    const a = document.createElement('a');
+    const json = JSON.stringify(data);
+    const blob = new Blob([json], { type: 'octet/stream' });
+    const url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = 'translations.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  public async import(file: File): Promise<void> {
+    const importedJson = await file.text();
+    const imported: Record<string, Translations> = JSON.parse(importedJson);
+    Object.entries(imported).forEach(([, value]) => {
+      const original = value.en;
+      Object.entries(value).forEach(([language, translation]) => {
+        this.translate(original, translation, language as keyof Translations);
+      });
+    });
+  }
+
+  private getAllTranslations(): Record<string, Translations> {
     return new Array(localStorage.length)
       .fill(null)
       .map((_, i) => localStorage.key(i))

@@ -88,4 +88,21 @@ export class RoosterSelectorComponent implements AfterViewInit {
 
     actionSheet.present();
   }
+
+  public exportTranslations(): void {
+    this.translationsService.export();
+  }
+
+  public async importTranslations(event: Event): Promise<void> {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (!target || !files) {
+      return;
+    }
+    const file: File = files[0];
+    if (!file) {
+      return;
+    }
+    this.translationsService.import(file);
+  }
 }
