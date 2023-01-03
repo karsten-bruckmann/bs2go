@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { map, Observable, shareReplay, tap } from 'rxjs';
+import { combineLatest, map, Observable, shareReplay, tap } from 'rxjs';
+import { StateService } from '../../services/state.service';
 import { TranslationsService } from '../../services/translations.service';
 
 @Component({
@@ -15,7 +16,8 @@ import { TranslationsService } from '../../services/translations.service';
 export class TranslatableComponent implements OnChanges {
   constructor(
     private sanitizer: DomSanitizer,
-    private translationService: TranslationsService
+    private translationService: TranslationsService,
+    public state: StateService
   ) {}
 
   @Input() public set text(html: string) {
@@ -30,10 +32,15 @@ export class TranslatableComponent implements OnChanges {
     { original: string; translated: string; safeContent: SafeHtml }[]
   >;
 
+  public editable$ = combineLatest([
+    this.state.translationsEditMode$,
+    this.translationService.translatable$,
+  ]).pipe(map(([editMode, translatable]) => editMode && translatable));
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['text']) {
       this.translation$ = this.translationService
-        .getTranslation('de', this.original)
+        .getTranslation(this.original)
         .pipe(
           map(translations =>
             translations.map(translation => ({
@@ -49,6 +56,6 @@ export class TranslatableComponent implements OnChanges {
     }
   }
   public translate(original: string, translation: string | null | undefined) {
-    this.translationService.translate('de', original, translation || '');
+    this.translationService.translate(original, translation || '');
   }
 }

@@ -51,4 +51,22 @@ export class StateService {
     this._rooster$.next(rooster);
     localStorage.setItem('rooster', JSON.stringify(rooster));
   }
+
+  private _translationsEditMode$ = new BehaviorSubject<boolean>(
+    localStorage.getItem('translationsEditMode') ? true : false
+  );
+
+  public get translationsEditMode$() {
+    return this._translationsEditMode$.asObservable();
+  }
+
+  public setTranslationsEditMode(enabled: boolean) {
+    console.log(enabled);
+    this._translationsEditMode$.next(enabled);
+    if (enabled) {
+      localStorage.setItem('translationsEditMode', 'enabled');
+    } else {
+      localStorage.removeItem('translationsEditMode');
+    }
+  }
 }

@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
-import { filter, from, map, merge, Observable, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  filter,
+  firstValueFrom,
+  from,
+  map,
+  merge,
+  Observable,
+  Subject,
+  switchMap,
+} from 'rxjs';
 import { Md5 } from 'ts-md5';
 
 interface Translations {
   en: string;
   de?: string;
+  fr?: string;
+  es?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -18,30 +30,64 @@ export class TranslationsService {
     { start: '{', end: '}' },
   ];
 
+  public readonly languages: Record<
+    keyof Translations,
+    { flag: string; name: string }
+  > = {
+    en: { flag: '🇬🇧', name: 'English' },
+    de: { flag: '🇩🇪', name: 'Deutsch' },
+    fr: { flag: '🇫🇷', name: 'Français' },
+    es: { flag: '🇪🇸', name: 'Español' },
+  };
+
+  public readonly selectedLanguage$: BehaviorSubject<keyof Translations> =
+    new BehaviorSubject(localStorage.getItem('language') as keyof Translations);
+
+  public readonly translatable$: Observable<boolean> =
+    this.selectedLanguage$.pipe(map(language => 'en' !== language));
+
+  public setLanguage(language: keyof Translations): void {
+    localStorage.setItem('language', language);
+    this.selectedLanguage$.next(language);
+  }
+
   public getTranslation(
-    language: keyof Translations,
     original: string
   ): Observable<{ original: string; translated: string }[]> {
     const originalSplit = this.splitText(original);
-    return merge(from(originalSplit), this.updatedTexts$).pipe(
-      filter(text => originalSplit.includes(text)),
-      map(() =>
-        originalSplit.map(orig => {
-          const translations: Translations =
-            JSON.parse(
-              localStorage.getItem(`translation-${Md5.hashStr(orig)}`) || 'null'
-            ) || {};
-          return { translated: translations[language] || orig, original: orig };
-        })
+    return this.selectedLanguage$.pipe(
+      switchMap(language =>
+        merge(from(originalSplit), this.updatedTexts$).pipe(
+          filter(text => originalSplit.includes(text)),
+          map(() =>
+            originalSplit.map(orig => {
+              const translations: Translations =
+                JSON.parse(
+                  localStorage.getItem(`translation-${Md5.hashStr(orig)}`) ||
+                    'null'
+                ) || {};
+              return {
+                translated: translations[language] || orig,
+                original: orig,
+              };
+            })
+          )
+        )
       )
     );
   }
 
-  public translate(
-    language: keyof Translations,
+  public async translate(
     original: string,
     translation: string | null
-  ): void {
+  ): Promise<void> {
+    const translatable = await firstValueFrom(this.translatable$);
+    if (!translatable) {
+      return;
+    }
+
+    const language = await firstValueFrom(this.selectedLanguage$);
+
     if (!translation || original === translation) {
       localStorage.removeItem(`translation-${Md5.hashStr(original)}`);
       this._updatedTexts$.next(original);
