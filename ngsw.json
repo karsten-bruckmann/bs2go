@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1672768473314,
+  "timestamp": 1672769225243,
   "index": "/bs2go/index.html",
   "assetGroups": [
     {
@@ -67,7 +67,7 @@
         "/bs2go/common.b8d634cac05ee5a9.js",
         "/bs2go/favicon.ico",
         "/bs2go/index.html",
-        "/bs2go/main.f9fc56342654b450.js",
+        "/bs2go/main.a9fabb522611ec82.js",
         "/bs2go/manifest.webmanifest",
         "/bs2go/polyfills-core-js.be3c4db4ba12d4e4.js",
         "/bs2go/polyfills-dom.55a512cb243f4299.js",
@@ -162,8 +162,8 @@
     "/bs2go/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/bs2go/common.b8d634cac05ee5a9.js": "8f600a9ecc0d6973ccae2f4d65915385ed66d053",
     "/bs2go/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/bs2go/index.html": "978ef3ecb9d8d53de920740bf36cbbfaa4f33055",
-    "/bs2go/main.f9fc56342654b450.js": "c8cf5610f4335df4485d0bd5a22acf04589bb815",
+    "/bs2go/index.html": "a4adc8d1b9976de024ba0fc82d745afa14210c52",
+    "/bs2go/main.a9fabb522611ec82.js": "8d43f979c80bd7efd87fd3ebf07ffaa2d9e3414d",
     "/bs2go/manifest.webmanifest": "78bdb1fa8e885aa0afbe09a056e19a1f90d2cd28",
     "/bs2go/polyfills-core-js.be3c4db4ba12d4e4.js": "83ec711f891793fe224ec13df63736c3c4734519",
     "/bs2go/polyfills-dom.55a512cb243f4299.js": "90ba5cea322637e1d67a9d2dfda588b6c8f51bff",
