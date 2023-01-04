@@ -41,7 +41,9 @@ export class TranslationsService {
   };
 
   public readonly selectedLanguage$: BehaviorSubject<keyof Translations> =
-    new BehaviorSubject(localStorage.getItem('language') as keyof Translations);
+    new BehaviorSubject(
+      (localStorage.getItem('language') || 'de') as keyof Translations
+    );
 
   public readonly translatable$: Observable<boolean> =
     this.selectedLanguage$.pipe(map(language => 'en' !== language));
