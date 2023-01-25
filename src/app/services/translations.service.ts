@@ -20,6 +20,9 @@ enum Language {
 
 @Injectable({ providedIn: 'root' })
 export class TranslationsService {
+  private readonly translationsStorageKeyPrefix = 'translations-v2-';
+  private readonly languageStorageKey = 'language-v2';
+
   private _updatedTexts$: Subject<string> = new Subject();
   public updatedTexts$ = this._updatedTexts$.asObservable();
 
@@ -32,13 +35,15 @@ export class TranslationsService {
     };
 
   public readonly selectedLanguage$: BehaviorSubject<Language> =
-    new BehaviorSubject((localStorage.getItem('language') || 'de') as Language);
+    new BehaviorSubject(
+      (localStorage.getItem(this.languageStorageKey) || 'de') as Language
+    );
 
   public readonly translatable$: Observable<boolean> =
     this.selectedLanguage$.pipe(map(language => 'en' !== language));
 
   public setLanguage(language: Language): void {
-    localStorage.setItem('language', language);
+    localStorage.setItem(this.languageStorageKey, language);
     this.selectedLanguage$.next(language);
   }
 
@@ -51,7 +56,9 @@ export class TranslationsService {
           filter(hash => hash === md5),
           map(
             () =>
-              localStorage.getItem(`translation-${language}-${md5}`) || original
+              localStorage.getItem(
+                `${this.translationsStorageKeyPrefix}${language}-${md5}`
+              ) || original
           )
         )
       )
@@ -69,12 +76,17 @@ export class TranslationsService {
       translationLanguage || (await firstValueFrom(this.selectedLanguage$));
 
     if (!translation || original === translation) {
-      localStorage.removeItem(`translation-${language}-${md5}`);
+      localStorage.removeItem(
+        `${this.translationsStorageKeyPrefix}${language}-${md5}`
+      );
       this._updatedTexts$.next(md5);
       return;
     }
 
-    localStorage.setItem(`translation-${language}-${md5}`, translation);
+    localStorage.setItem(
+      `${this.translationsStorageKeyPrefix}${language}-${md5}`,
+      translation
+    );
     this._updatedTexts$.next(md5);
   }
 
@@ -110,7 +122,13 @@ export class TranslationsService {
       if (!key) {
         continue;
       }
-      if (!key.match(/^translation-(en|de|fr|es)-[0-9a-f]{32}/)) {
+      if (
+        !key.match(
+          new RegExp(
+            `^${this.translationsStorageKeyPrefix}(en|de|fr|es)-[0-9a-f]{32}`
+          )
+        )
+      ) {
         continue;
       }
 

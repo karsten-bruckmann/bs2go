@@ -18,9 +18,14 @@ export type Sheet = UnitSheet | SummarySheet;
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
+  private readonly storageKeys = {
+    rooster: 'rooster-v2',
+    sheet: 'sheet-v2',
+  };
+
   private _sheet$ = new BehaviorSubject<Sheet | undefined>(
-    localStorage.getItem('sheet')
-      ? JSON.parse(localStorage.getItem('sheet') || '')
+    localStorage.getItem(this.storageKeys.sheet)
+      ? JSON.parse(localStorage.getItem(this.storageKeys.sheet) || '')
       : undefined
   );
 
@@ -31,15 +36,15 @@ export class StateService {
   public setSheet(sheet: Sheet | undefined) {
     this._sheet$.next(sheet);
     if (sheet) {
-      localStorage.setItem('sheet', JSON.stringify(sheet));
+      localStorage.setItem(this.storageKeys.sheet, JSON.stringify(sheet));
     } else {
-      localStorage.removeItem('sheet');
+      localStorage.removeItem(this.storageKeys.sheet);
     }
   }
 
   private _roster$ = new BehaviorSubject<string | undefined>(
-    localStorage.getItem('roster')
-      ? JSON.parse(localStorage.getItem('roster') || '')
+    localStorage.getItem(this.storageKeys.rooster)
+      ? JSON.parse(localStorage.getItem(this.storageKeys.rooster) || '')
       : undefined
   );
 
@@ -50,7 +55,7 @@ export class StateService {
   public setRoster(roster: string) {
     this.setSheet(undefined);
     this._roster$.next(roster);
-    localStorage.setItem('roster', JSON.stringify(roster));
+    localStorage.setItem(this.storageKeys.rooster, JSON.stringify(roster));
   }
 
   private _translationsEditMode$ = new BehaviorSubject<boolean>(

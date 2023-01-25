@@ -8,6 +8,8 @@ import { RosterAdapterService } from './roster-adapter.service';
 export class RostersService {
   constructor(private adapter: RosterAdapterService) {}
 
+  private readonly storageKey = 'roosters-v2';
+
   private _rosters$: BehaviorSubject<Roster[]> = new BehaviorSubject(
     this.readFromStorage()
   );
@@ -35,17 +37,17 @@ export class RostersService {
 
     rosters.push(roster);
     this._rosters$.next(rosters);
-    localStorage.setItem('rosters', JSON.stringify(rosters));
+    localStorage.setItem(this.storageKey, JSON.stringify(rosters));
     return roster;
   }
 
   public delete(title: string): void {
     const files = this._rosters$.value.filter(file => file.title !== title);
     this._rosters$.next(files);
-    localStorage.setItem('rosters', JSON.stringify(files));
+    localStorage.setItem(this.storageKey, JSON.stringify(files));
   }
 
   private readFromStorage(): Roster[] {
-    return JSON.parse(localStorage.getItem('rosters') || '[]') || [];
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]') || [];
   }
 }
