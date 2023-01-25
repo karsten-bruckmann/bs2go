@@ -27,15 +27,10 @@
             color="primary"
             slot="start"
             name="document-outline"></ion-icon>
-          Neue Datei
+          Neue Datei (exportierte .rosz Datei)
         </ion-label>
         <ion-button fill="outline" (click)="f.click()">wählen...</ion-button>
-        <input
-          (change)="saveFile($event)"
-          class="ion-hide"
-          #f
-          type="file"
-          accept=".rosz" />
+        <input (change)="saveFile($event)" class="ion-hide" #f type="file" />
       </ion-item>
       <ion-item *ngFor="let roster of rosterTitles$ | async">
         <ion-label (click)="selectRoster(roster)">
