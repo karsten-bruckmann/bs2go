@@ -29,9 +29,7 @@
         <ion-toggle
           #tt
           [checked]="state.translationsEditMode$ | async"
-          (ionChange)="state.setTranslationsEditMode(tt.checked)"
-          ><ion-icon name="edit"></ion-icon
-        ></ion-toggle>
+          (ionChange)="state.setTranslationsEditMode(tt.checked)"></ion-toggle>
         <ion-label>Bearbeiten</ion-label>
       </span>
     </ion-buttons>

@@ -86,24 +86,30 @@ export class RosterAdapterService {
   private getWeapons(unit: BsSelection): Weapon[] {
     return unit.selections
       .filter(selection => selection.type === 'upgrade')
-      .map(selection =>
-        selection.profiles
+      .map(selection => ({
+        title: selection.name,
+        amount: selection.number,
+        abilities: selection.profiles
+          .filter(
+            (profile): profile is AbilityProfile =>
+              profile.typeName === TypeName.ABILITY
+          )
+          .map(a => a.description),
+        profiles: selection.profiles
           .filter(
             (profile): profile is WeaponProfile =>
               profile.typeName === TypeName.WEAPON
           )
           .map(profile => ({
-            title: selection.name,
-            amount: selection.number,
+            title: profile.name,
             range: profile.range,
             type: profile.type,
             strength: profile.strength,
             armourPenetration: profile.armourPenetration,
             damage: profile.damage,
             abilities: profile.abilities,
-          }))
-      )
-      .flat();
+          })),
+      }));
   }
 
   private getAbilities(

@@ -36,6 +36,10 @@ th {
     text-align: center;
   }
 
+  &.long {
+    min-width: 40vw;
+  }
+
   &:not(.wrap) {
     white-space: nowrap;
     ::ng-deep {
@@ -51,4 +55,17 @@ th {
   color: var(--ion-color-tertiary-contrast);
   font-weight: bold;
   font-family: var(--theme-font);
+}
+
+tr.sub-profile {
+  td {
+    background: var(--ion-color-light);
+    &:nth-child(2) {
+      font-style: italic;
+    }
+  }
+}
+
+div.scroller {
+  overflow-x: auto;
 }

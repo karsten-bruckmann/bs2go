@@ -43,6 +43,12 @@ export interface Profile {
 export interface Weapon {
   title: string;
   amount: number;
+  abilities: string[];
+  profiles: WeaponProfile[];
+}
+
+export interface WeaponProfile {
+  title: string;
   range: string;
   type: string;
   strength: string;

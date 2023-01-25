@@ -63,33 +63,82 @@
         </table>
 
         <!-- WEAPONS -->
-        <table class="aligned">
-          <tr>
-            <th colspan="2"></th>
-            <th><app-translatable [text]="'Range'"></app-translatable></th>
-            <th><app-translatable [text]="'Type'"></app-translatable></th>
-            <th><app-translatable [text]="'S'"></app-translatable></th>
-            <th><app-translatable [text]="'AP'"></app-translatable></th>
-            <th><app-translatable [text]="'D'"></app-translatable></th>
-            <th><app-translatable [text]="'Abilities'"></app-translatable></th>
-          </tr>
-          <tr *ngFor="let weapon of model.weapons">
-            <td>
-              {{ weapon.amount }}
-            </td>
-            <td><app-translatable [text]="weapon.title"></app-translatable></td>
-            <td class="centered">{{ weapon.range }}</td>
-            <td class="centered">
-              <app-translatable [text]="weapon.type"></app-translatable>
-            </td>
-            <td class="centered">{{ weapon.strength }}</td>
-            <td class="centered">{{ weapon.armourPenetration }}</td>
-            <td class="centered">{{ weapon.damage }}</td>
-            <td class="wrap">
-              <app-translatable [text]="weapon.abilities"></app-translatable>
-            </td>
-          </tr>
-        </table>
+        <div class="scroller">
+          <table class="aligned">
+            <tr>
+              <th colspan="2"></th>
+              <th><app-translatable [text]="'Range'"></app-translatable></th>
+              <th><app-translatable [text]="'Type'"></app-translatable></th>
+              <th><app-translatable [text]="'S'"></app-translatable></th>
+              <th><app-translatable [text]="'AP'"></app-translatable></th>
+              <th><app-translatable [text]="'D'"></app-translatable></th>
+              <th>
+                <app-translatable [text]="'Abilities'"></app-translatable>
+              </th>
+            </tr>
+            <ng-container *ngFor="let weapon of model.weapons">
+              <tr
+                *ngIf="
+                  weapon.abilities.length === 0 && weapon.profiles.length === 1;
+                  else multiProfileWeapon
+                ">
+                <td>
+                  {{ weapon.amount }}
+                </td>
+                <td>
+                  <app-translatable [text]="weapon.title"></app-translatable>
+                </td>
+                <td class="centered">{{ weapon.profiles[0].range }}</td>
+                <td class="centered">
+                  <app-translatable
+                    [text]="weapon.profiles[0].type"></app-translatable>
+                </td>
+                <td class="centered">{{ weapon.profiles[0].strength }}</td>
+                <td class="centered">
+                  {{ weapon.profiles[0].armourPenetration }}
+                </td>
+                <td class="centered">{{ weapon.profiles[0].damage }}</td>
+                <td class="wrap long">
+                  <app-translatable
+                    [text]="weapon.profiles[0].abilities"></app-translatable>
+                </td>
+              </tr>
+              <ng-template #multiProfileWeapon>
+                <tr>
+                  <td>
+                    {{ weapon.amount }}
+                  </td>
+                  <td>
+                    {{ weapon.title }}
+                  </td>
+                  <td colspan="6" class="wrap">
+                    <app-translatable
+                      [text]="weapon.abilities.join('\n')"></app-translatable>
+                  </td>
+                </tr>
+                <tr *ngFor="let profile of weapon.profiles" class="sub-profile">
+                  <td></td>
+                  <td>
+                    <app-translatable [text]="profile.title"></app-translatable>
+                  </td>
+                  <td class="centered">{{ profile.range }}</td>
+                  <td class="centered">
+                    <app-translatable [text]="profile.type"></app-translatable>
+                  </td>
+                  <td class="centered">{{ profile.strength }}</td>
+                  <td class="centered">
+                    {{ profile.armourPenetration }}
+                  </td>
+                  <td class="centered">{{ profile.damage }}</td>
+                  <td class="wrap long">
+                    <app-translatable
+                      [text]="profile.abilities"></app-translatable>
+                  </td>
+                </tr>
+              </ng-template>
+            </ng-container>
+          </table>
+        </div>
 
         <!-- RULES -->
         <table>
@@ -103,7 +152,7 @@
             <td>
               <app-translatable [text]="ability.title"></app-translatable>
             </td>
-            <td class="wrap">
+            <td class="wrap long">
               <app-translatable [text]="ability.description"></app-translatable>
             </td>
           </tr>
