@@ -85,7 +85,14 @@ export class RosterAdapterService {
 
   private getWeapons(unit: BsSelection): Weapon[] {
     return unit.selections
-      .filter(selection => selection.type === 'upgrade')
+      .filter(
+        selection =>
+          selection.type === 'upgrade' &&
+          selection.profiles.filter(
+            (profile): profile is WeaponProfile =>
+              profile.typeName === TypeName.WEAPON
+          ).length > 0
+      )
       .map(selection => ({
         title: selection.name,
         amount: selection.number,
@@ -142,7 +149,14 @@ export class RosterAdapterService {
     let profiles: AbilityProfile[] = [];
 
     selection.selections
-      .filter(s => s.type === 'upgrade')
+      .filter(
+        s =>
+          s.type === 'upgrade' &&
+          s.profiles.filter(
+            (profile): profile is WeaponProfile =>
+              profile.typeName === TypeName.WEAPON
+          ).length === 0
+      )
       .forEach(
         subSelection =>
           (profiles = this.getAbilityProfiles(subSelection).concat(profiles))
