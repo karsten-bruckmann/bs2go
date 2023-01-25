@@ -32,6 +32,10 @@ th {
   padding: 5px 10px;
   vertical-align: top;
 
+  &.centered {
+    text-align: center;
+  }
+
   &:not(.wrap) {
     white-space: nowrap;
     ::ng-deep {

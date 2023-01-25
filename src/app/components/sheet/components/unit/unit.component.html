@@ -33,28 +33,28 @@
             <td *ngIf="model.profiles.length > 1">
               <app-translatable [text]="profile.title"></app-translatable>
             </td>
-            <td>
+            <td class="centered">
               {{ profile.movement }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.weaponSkill }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.ballisticSkill }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.strength }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.toughness }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.wounds }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.attacks }}
             </td>
-            <td>
+            <td class="centered">
               {{ profile.leadership }}
             </td>
             <td>{{ profile.save }}</td>
@@ -76,11 +76,13 @@
               {{ weapon.amount }}
             </td>
             <td><app-translatable [text]="weapon.title"></app-translatable></td>
-            <td>{{ weapon.range }}</td>
-            <td>{{ weapon.type }}</td>
-            <td>{{ weapon.strength }}</td>
-            <td>{{ weapon.armourPenetration }}</td>
-            <td>{{ weapon.damage }}</td>
+            <td class="centered">{{ weapon.range }}</td>
+            <td class="centered">
+              <app-translatable [text]="weapon.type"></app-translatable>
+            </td>
+            <td class="centered">{{ weapon.strength }}</td>
+            <td class="centered">{{ weapon.armourPenetration }}</td>
+            <td class="centered">{{ weapon.damage }}</td>
             <td class="wrap">
               <app-translatable [text]="weapon.abilities"></app-translatable>
             </td>
