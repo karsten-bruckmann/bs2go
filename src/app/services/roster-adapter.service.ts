@@ -58,9 +58,7 @@ export class RosterAdapterService {
         amount: selection.number,
         profiles: this.getProfiles(selection),
         weapons: this.getWeapons(selection),
-        abilities: this.getAbilities(detachment, unit, selection).concat(
-          this.getAbilities(detachment, unit)
-        ),
+        abilities: this.getAbilities(detachment, unit, selection),
       }));
 
     return this.deduplicateModels(models);
@@ -135,16 +133,22 @@ export class RosterAdapterService {
   private getAbilityProfiles(
     selection: BsSelection | BsForce
   ): AbilityProfile[] {
-    let profiles = (isBsForce(selection) ? [] : selection.profiles).filter(
-      (p): p is AbilityProfile => p.typeName === TypeName.ABILITY
-    );
+    let profiles: AbilityProfile[] = [];
 
     selection.selections
       .filter(s => s.type === 'upgrade')
       .forEach(
         subSelection =>
-          (profiles = profiles.concat(this.getAbilityProfiles(subSelection)))
+          (profiles = this.getAbilityProfiles(subSelection).concat(profiles))
       );
+
+    if (!isBsForce(selection)) {
+      profiles = profiles.concat(
+        selection.profiles.filter(
+          (p): p is AbilityProfile => p.typeName === TypeName.ABILITY
+        )
+      );
+    }
 
     return profiles;
   }
