@@ -1,18 +1,27 @@
-import { ExplosionProfile, BSExplosionCharacteristic, TypeName } from '../types';
+import {
+  ExplosionProfile,
+  BSExplosionCharacteristic,
+  TypeName,
+} from '../types';
 import AbstractProfileConverter from './AbstractProfileConverter';
 
-class ExplosionProfileConverter extends AbstractProfileConverter<ExplosionProfile, BSExplosionCharacteristic> {
+class ExplosionProfileConverter extends AbstractProfileConverter<
+  ExplosionProfile,
+  BSExplosionCharacteristic
+> {
   constructor() {
     super({
       typeName: TypeName.EXPLOSION,
       name: '-',
       diceRoll: '-',
       distance: '-',
-      mortalWounds: '-'
+      mortalWounds: '-',
     });
   }
 
-  protected getProperty(bsCharacteristic: BSExplosionCharacteristic): Partial<ExplosionProfile> {
+  protected getProperty(
+    bsCharacteristic: BSExplosionCharacteristic
+  ): Partial<ExplosionProfile> {
     switch (bsCharacteristic.$.name) {
       case 'Dice roll':
         return { diceRoll: bsCharacteristic._ };

@@ -1,18 +1,27 @@
 import AbstractProfileConverter from './AbstractProfileConverter';
-import { PsychicPowerProfile, BSPsychicPowerCharacteristic, TypeName } from '../types';
+import {
+  PsychicPowerProfile,
+  BSPsychicPowerCharacteristic,
+  TypeName,
+} from '../types';
 
-class PsychicPowerProfileConverter extends AbstractProfileConverter<PsychicPowerProfile, BSPsychicPowerCharacteristic> {
+class PsychicPowerProfileConverter extends AbstractProfileConverter<
+  PsychicPowerProfile,
+  BSPsychicPowerCharacteristic
+> {
   constructor() {
     super({
       typeName: TypeName.PSYCHIC_POWER,
       name: '-',
       warpCharge: '-',
       range: '-',
-      details: '-'
+      details: '-',
     });
   }
 
-  protected getProperty(bsCharacteristic: BSPsychicPowerCharacteristic): Partial<PsychicPowerProfile> {
+  protected getProperty(
+    bsCharacteristic: BSPsychicPowerCharacteristic
+  ): Partial<PsychicPowerProfile> {
     switch (bsCharacteristic.$.name) {
       case 'Warp Charge':
         return { warpCharge: bsCharacteristic._ };

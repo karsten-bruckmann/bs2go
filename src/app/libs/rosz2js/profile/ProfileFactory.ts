@@ -7,7 +7,7 @@ import {
   isBSTransportProfile,
   isBSPsychicPowerProfile,
   isBSPsykerProfile,
-  isBSExplosionProfile
+  isBSExplosionProfile,
 } from '../guards';
 import WeaponProfileConverter from './WeaponProfileConverter';
 import AbstractProfileConverter from './AbstractProfileConverter';
@@ -22,17 +22,29 @@ import UnknownProfileConverter from './UnknownProfileConverter';
 
 class ProfileFactory {
   static getProfile(bsProfile: BSProfile<BSCharacteristic>): Profile<TypeName> {
-    let converter: AbstractProfileConverter<Profile<TypeName>, BSCharacteristic>;
+    let converter: AbstractProfileConverter<
+      Profile<TypeName>,
+      BSCharacteristic
+    >;
 
     if (isBSWeaponProfile(bsProfile)) converter = new WeaponProfileConverter();
     else if (isBSUnitProfile(bsProfile)) converter = new UnitProfileConverter();
-    else if (isBSAbilitiesProfile(bsProfile)) converter = new AbilityProfileConverter();
-    else if (isBSWoundTrackProfile(bsProfile)) converter = new WoundTrackProfileConverter();
-    else if (isBSTransportProfile(bsProfile)) converter = new TransportProfileConverter();
-    else if (isBSPsychicPowerProfile(bsProfile)) converter = new PsychicPowerProfileConverter();
-    else if (isBSPsykerProfile(bsProfile)) converter = new PsykerProfileConverter();
-    else if (isBSExplosionProfile(bsProfile)) converter = new ExplosionProfileConverter();
-    else converter = new UnknownProfileConverter((bsProfile as { $: { name: string } }).$.name);
+    else if (isBSAbilitiesProfile(bsProfile))
+      converter = new AbilityProfileConverter();
+    else if (isBSWoundTrackProfile(bsProfile))
+      converter = new WoundTrackProfileConverter();
+    else if (isBSTransportProfile(bsProfile))
+      converter = new TransportProfileConverter();
+    else if (isBSPsychicPowerProfile(bsProfile))
+      converter = new PsychicPowerProfileConverter();
+    else if (isBSPsykerProfile(bsProfile))
+      converter = new PsykerProfileConverter();
+    else if (isBSExplosionProfile(bsProfile))
+      converter = new ExplosionProfileConverter();
+    else
+      converter = new UnknownProfileConverter(
+        (bsProfile as { $: { name: string } }).$.name
+      );
 
     return converter.convert(bsProfile);
   }

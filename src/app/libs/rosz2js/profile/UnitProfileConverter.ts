@@ -1,7 +1,10 @@
 import AbstractProfileConverter from './AbstractProfileConverter';
 import { UnitProfile, BSUnitCharacteristic, TypeName } from '../types';
 
-class UnitProfileConverter extends AbstractProfileConverter<UnitProfile, BSUnitCharacteristic> {
+class UnitProfileConverter extends AbstractProfileConverter<
+  UnitProfile,
+  BSUnitCharacteristic
+> {
   constructor() {
     super({
       typeName: TypeName.UNIT,
@@ -14,11 +17,13 @@ class UnitProfileConverter extends AbstractProfileConverter<UnitProfile, BSUnitC
       wounds: '-',
       attacks: '-',
       leadership: '-',
-      save: '-'
+      save: '-',
     });
   }
 
-  protected getProperty(bsCharacteristic: BSUnitCharacteristic): Partial<UnitProfile> {
+  protected getProperty(
+    bsCharacteristic: BSUnitCharacteristic
+  ): Partial<UnitProfile> {
     switch (bsCharacteristic.$.name) {
       case 'M':
         return { movement: bsCharacteristic._ };

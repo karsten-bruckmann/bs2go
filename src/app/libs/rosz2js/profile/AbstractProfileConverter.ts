@@ -1,7 +1,10 @@
 import { Profile, TypeName, BSCharacteristic, BSProfile } from '../types';
 import { isBSCharacteristic } from '../guards';
 
-abstract class ProfileConverter<S extends Profile<TypeName>, T extends BSCharacteristic> {
+abstract class ProfileConverter<
+  S extends Profile<TypeName>,
+  T extends BSCharacteristic
+> {
   private profile: S;
 
   protected constructor(profile: S) {
@@ -11,9 +14,9 @@ abstract class ProfileConverter<S extends Profile<TypeName>, T extends BSCharact
   convert(bsProfile: BSProfile<T>): S {
     this.profile.name = bsProfile.$.name || '-';
 
-    bsProfile.characteristics.forEach((bsCharacteristic) => {
+    bsProfile.characteristics.forEach(bsCharacteristic => {
       if (isBSCharacteristic(bsCharacteristic)) {
-        bsCharacteristic.characteristic.forEach((bsCharacteristic) => {
+        bsCharacteristic.characteristic.forEach(bsCharacteristic => {
           Object.assign(this.profile, this.getProperty(bsCharacteristic));
         });
       }

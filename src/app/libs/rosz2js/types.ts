@@ -46,13 +46,13 @@ export type BSCost = {
 export enum CostType {
   PL = 'PL',
   PTS = 'pts',
-  CP = 'CP'
+  CP = 'CP',
 }
 
 export enum BSCostType {
   PL = ' PL',
   PTS = 'pts',
-  CP = 'CP'
+  CP = 'CP',
 }
 
 export type Force = {
@@ -145,7 +145,7 @@ export enum TypeName {
   PSYCHIC_POWER = 'Psychic Power',
   PSYKER = 'Psyker',
   EXPLOSION = 'Explosion',
-  UNKNOWN = 'Unknown'
+  UNKNOWN = 'Unknown',
 }
 
 export interface AbilityProfile extends Profile<TypeName.ABILITY> {
@@ -222,7 +222,7 @@ export enum BSTypeName {
   TRANSPORT = 'Transport',
   PSYCHIC_POWER = 'Psychic Power',
   PSYKER = 'Psyker',
-  EXPLOSION = 'Explosion'
+  EXPLOSION = 'Explosion',
 }
 
 export interface BSCharacteristic {
@@ -290,6 +290,10 @@ export interface BSExplosionCharacteristic extends BSCharacteristic {
   };
 }
 
-export type CalculatedCosts = { [CostType.PTS]: number; [CostType.PL]: number; [CostType.CP]: number };
+export type CalculatedCosts = {
+  [CostType.PTS]: number;
+  [CostType.PL]: number;
+  [CostType.CP]: number;
+};
 
 export type LoaderInput = string | Buffer | unknown;

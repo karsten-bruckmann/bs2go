@@ -1,7 +1,10 @@
 import { BSWeaponCharacteristic, WeaponProfile, TypeName } from '../types';
 import AbstractProfileConverter from './AbstractProfileConverter';
 
-class WeaponProfileConverter extends AbstractProfileConverter<WeaponProfile, BSWeaponCharacteristic> {
+class WeaponProfileConverter extends AbstractProfileConverter<
+  WeaponProfile,
+  BSWeaponCharacteristic
+> {
   constructor() {
     super({
       typeName: TypeName.WEAPON,
@@ -11,11 +14,13 @@ class WeaponProfileConverter extends AbstractProfileConverter<WeaponProfile, BSW
       strength: '-',
       armourPenetration: '-',
       damage: '-',
-      abilities: '-'
+      abilities: '-',
     });
   }
 
-  protected getProperty(bsCharacteristic: BSWeaponCharacteristic): Partial<WeaponProfile> {
+  protected getProperty(
+    bsCharacteristic: BSWeaponCharacteristic
+  ): Partial<WeaponProfile> {
     switch (bsCharacteristic.$.name) {
       case 'Range':
         return { range: bsCharacteristic._ };

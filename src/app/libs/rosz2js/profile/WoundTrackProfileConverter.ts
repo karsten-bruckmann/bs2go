@@ -1,16 +1,25 @@
 import AbstractProfileConverter from './AbstractProfileConverter';
-import { WoundTrackProfile, BSWoundTrackCharacteristic, TypeName } from '../types';
+import {
+  WoundTrackProfile,
+  BSWoundTrackCharacteristic,
+  TypeName,
+} from '../types';
 
-class WoundTrackProfileConverter extends AbstractProfileConverter<WoundTrackProfile, BSWoundTrackCharacteristic> {
+class WoundTrackProfileConverter extends AbstractProfileConverter<
+  WoundTrackProfile,
+  BSWoundTrackCharacteristic
+> {
   constructor() {
     super({
       typeName: TypeName.WOUND_TRACK,
       name: '-',
-      remainingWounds: '-'
+      remainingWounds: '-',
     });
   }
 
-  protected getProperty(bsCharacteristic: BSWoundTrackCharacteristic): Partial<WoundTrackProfile> {
+  protected getProperty(
+    bsCharacteristic: BSWoundTrackCharacteristic
+  ): Partial<WoundTrackProfile> {
     if (bsCharacteristic.$.name === 'Remaining W') {
       return { remainingWounds: bsCharacteristic._ };
     } else {
