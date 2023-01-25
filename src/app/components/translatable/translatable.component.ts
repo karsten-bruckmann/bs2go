@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { combineLatest, map, Observable, shareReplay } from 'rxjs';
 import { StateService } from '../../services/state.service';
@@ -15,7 +16,8 @@ import { TranslationsService } from '../../services/translations.service';
 export class TranslatableComponent implements OnChanges {
   constructor(
     private translationService: TranslationsService,
-    public state: StateService
+    public state: StateService,
+    private domSanitizer: DomSanitizer
   ) {}
 
   @Input() public set text(text: string) {
@@ -45,5 +47,21 @@ export class TranslatableComponent implements OnChanges {
 
   public translate(original: string, translation: string | null | undefined) {
     this.translationService.translate(original, translation || '');
+  }
+
+  public listify(text: string): SafeHtml {
+    let beautified = text;
+    [...text.matchAll(/(?:(?:^|\n)(?:- [^\n]+(?:\n|$)*)+)/gm)].forEach(
+      match => {
+        beautified = beautified.replace(
+          match[0],
+          `<ul>${match[0].replaceAll(
+            /(?:^|\n)- (.*)(?:\n|$)/gm,
+            '<li>$1</li>'
+          )}</ul>`
+        );
+      }
+    );
+    return this.domSanitizer.bypassSecurityTrustHtml(beautified);
   }
 }
