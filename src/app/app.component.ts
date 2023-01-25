@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { IonicModule } from '@ionic/angular';
 import { filter } from 'rxjs';
-import { RoosterIndexComponent } from './components/rooster-index/rooster-index.component';
-import { RoosterSelectorComponent } from './components/rooster-selector/rooster-selector.component';
-import { RoosterComponent } from './components/rooster/rooster.component';
+import { RosterIndexComponent } from './components/roster-index/roster-index.component';
+import { RosterSelectorComponent } from './components/roster-selector/roster-selector.component';
+import { RosterComponent } from './components/sheet/sheet.component';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +15,9 @@ import { RoosterComponent } from './components/rooster/rooster.component';
   imports: [
     CommonModule,
     IonicModule,
-    RoosterComponent,
-    RoosterIndexComponent,
-    RoosterSelectorComponent,
+    RosterComponent,
+    RosterIndexComponent,
+    RosterSelectorComponent,
   ],
 })
 export class AppComponent {

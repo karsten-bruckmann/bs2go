@@ -3,20 +3,19 @@ import {
   BehaviorSubject,
   filter,
   firstValueFrom,
-  from,
   map,
-  merge,
   Observable,
+  startWith,
   Subject,
   switchMap,
 } from 'rxjs';
 import { Md5 } from 'ts-md5';
 
-interface Translations {
-  en: string;
-  de?: string;
-  fr?: string;
-  es?: string;
+enum Language {
+  en = 'en',
+  de = 'de',
+  fr = 'fr',
+  es = 'es',
 }
 
 @Injectable({ providedIn: 'root' })
@@ -24,55 +23,35 @@ export class TranslationsService {
   private _updatedTexts$: Subject<string> = new Subject();
   public updatedTexts$ = this._updatedTexts$.asObservable();
 
-  private readonly braces: { start: string; end: string }[] = [
-    { start: '[', end: ']' },
-    { start: '(', end: ')' },
-    { start: '{', end: '}' },
-  ];
+  public readonly languages: Record<Language, { flag: string; name: string }> =
+    {
+      en: { flag: '🇬🇧', name: 'English' },
+      de: { flag: '🇩🇪', name: 'Deutsch' },
+      fr: { flag: '🇫🇷', name: 'Français' },
+      es: { flag: '🇪🇸', name: 'Español' },
+    };
 
-  public readonly languages: Record<
-    keyof Translations,
-    { flag: string; name: string }
-  > = {
-    en: { flag: '🇬🇧', name: 'English' },
-    de: { flag: '🇩🇪', name: 'Deutsch' },
-    fr: { flag: '🇫🇷', name: 'Français' },
-    es: { flag: '🇪🇸', name: 'Español' },
-  };
-
-  public readonly selectedLanguage$: BehaviorSubject<keyof Translations> =
-    new BehaviorSubject(
-      (localStorage.getItem('language') || 'de') as keyof Translations
-    );
+  public readonly selectedLanguage$: BehaviorSubject<Language> =
+    new BehaviorSubject((localStorage.getItem('language') || 'de') as Language);
 
   public readonly translatable$: Observable<boolean> =
     this.selectedLanguage$.pipe(map(language => 'en' !== language));
 
-  public setLanguage(language: keyof Translations): void {
+  public setLanguage(language: Language): void {
     localStorage.setItem('language', language);
     this.selectedLanguage$.next(language);
   }
 
-  public getTranslation(
-    original: string
-  ): Observable<{ original: string; translated: string }[]> {
-    const originalSplit = this.splitText(original);
+  public getTranslation(original: string): Observable<string> {
+    const md5 = Md5.hashStr(original);
     return this.selectedLanguage$.pipe(
       switchMap(language =>
-        merge(from(originalSplit), this.updatedTexts$).pipe(
-          filter(text => originalSplit.includes(text)),
-          map(() =>
-            originalSplit.map(orig => {
-              const translations: Translations =
-                JSON.parse(
-                  localStorage.getItem(`translation-${Md5.hashStr(orig)}`) ||
-                    'null'
-                ) || {};
-              return {
-                translated: translations[language] || orig,
-                original: orig,
-              };
-            })
+        this.updatedTexts$.pipe(
+          startWith(md5),
+          filter(hash => hash === md5),
+          map(
+            () =>
+              localStorage.getItem(`translation-${language}-${md5}`) || original
           )
         )
       )
@@ -82,32 +61,21 @@ export class TranslationsService {
   public async translate(
     original: string,
     translation: string | null,
-    translationLanguage?: keyof Translations
+    translationLanguage?: Language
   ): Promise<void> {
-    const translatable = await firstValueFrom(this.translatable$);
-    if (!translatable) {
-      return;
-    }
+    const md5 = Md5.hashStr(original);
 
     const language =
       translationLanguage || (await firstValueFrom(this.selectedLanguage$));
 
     if (!translation || original === translation) {
-      localStorage.removeItem(`translation-${Md5.hashStr(original)}`);
-      this._updatedTexts$.next(original);
+      localStorage.removeItem(`translation-${language}-${md5}`);
+      this._updatedTexts$.next(md5);
       return;
     }
-    const translations: Translations = JSON.parse(
-      localStorage.getItem(`translation-${Md5.hashStr(original)}`) || 'null'
-    ) || {
-      en: original,
-    };
-    translations[language] = translation;
-    localStorage.setItem(
-      `translation-${Md5.hashStr(original)}`,
-      JSON.stringify(translations)
-    );
-    this._updatedTexts$.next(original);
+
+    localStorage.setItem(`translation-${language}-${md5}`, translation);
+    this._updatedTexts$.next(md5);
   }
 
   public export(): void {
@@ -124,45 +92,30 @@ export class TranslationsService {
 
   public async import(file: File): Promise<void> {
     const importedJson = await file.text();
-    const imported: Record<string, Translations> = JSON.parse(importedJson);
-    Object.entries(imported).forEach(([, value]) => {
-      const original = value.en;
-      Object.entries(value).forEach(([language, translation]) => {
-        this.translate(original, translation, language as keyof Translations);
-      });
+    const imported: Record<string, string> = JSON.parse(importedJson);
+    Object.entries(imported).forEach(([key, value]) => {
+      const md5 = key.match(/[0-9a-f]{32}$/)?.[0];
+      if (!md5) {
+        return;
+      }
+      localStorage.setItem(key, value);
+      this._updatedTexts$.next(md5);
     });
   }
 
-  private getAllTranslations(): Record<string, Translations> {
-    return new Array(localStorage.length)
-      .fill(null)
-      .map((_, i) => localStorage.key(i))
-      .filter((v): v is string => !!v)
-      .filter(v => v.match(/^translation-[0-9a-f]{32}/))
-      .map(v => {
-        const parsed = JSON.parse(localStorage.getItem(v) || 'null');
-        if (!parsed) {
-          return null;
-        }
-        return { [v]: parsed as Translations };
-      })
-      .filter((v): v is Record<string, Translations> => !!v)
-      .reduce<Record<string, Translations>>((acc, v) => ({ ...acc, ...v }), {});
-  }
+  private getAllTranslations(): Record<string, string> {
+    const all: Record<string, string> = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key) {
+        continue;
+      }
+      if (!key.match(/^translation-(en|de|fr|es)-[0-9a-f]{32}/)) {
+        continue;
+      }
 
-  private splitText(text: string): string[] {
-    let result: string[] = [text];
-    for (const brace of this.braces) {
-      result = result
-        .map(text =>
-          text.split(
-            new RegExp(`(\\${brace.start}[^\\${brace.end}]*\\${brace.end})`)
-          )
-        )
-        .flat()
-        .map(v => v.trim())
-        .filter(v => !!v);
+      all[key] = localStorage.getItem(key) || '';
     }
-    return result;
+    return all;
   }
 }

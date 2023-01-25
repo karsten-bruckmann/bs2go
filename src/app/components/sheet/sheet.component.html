@@ -1,0 +1,13 @@
+<ng-container *ngIf="roster$ | async as roster">
+  <ion-text color="primary">
+    <h1 id="roster-title">
+      {{ roster.title }}
+    </h1>
+  </ion-text>
+
+  <ng-container [ngSwitch]="(sheet$ | async)?.type">
+    <ng-template [ngSwitchCase]="'unit'">
+      <sheet-unit></sheet-unit>
+    </ng-template>
+  </ng-container>
+</ng-container>

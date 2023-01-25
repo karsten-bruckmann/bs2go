@@ -1,0 +1,50 @@
+:host {
+  display: block;
+}
+
+h2,
+h3,
+h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10px;
+}
+
+h2 {
+  background: var(--ion-color-secondary);
+  color: var(--ion-color-secondary-contrast);
+}
+h3 {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-tertiary-contrast);
+}
+
+table {
+  width: calc(100% - 20px);
+  border-collapse: collapse;
+  margin: 0 10px 30px 10px;
+}
+
+td,
+th {
+  border: 0.55px solid var(--ion-color-medium);
+  padding: 5px 10px;
+  vertical-align: top;
+
+  &:not(.wrap) {
+    white-space: nowrap;
+    ::ng-deep {
+      span {
+        white-space: nowrap;
+      }
+    }
+  }
+}
+
+th {
+  background: var(--ion-color-tertiary);
+  color: var(--ion-color-tertiary-contrast);
+  font-weight: bold;
+  font-family: var(--theme-font);
+}

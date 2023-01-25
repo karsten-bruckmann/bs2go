@@ -1,37 +1,35 @@
-<ng-container *ngFor="let item of translation$ | async">
-  <span
-    *ngIf="(editable$ | async) === false || item.editable === false"
-    [innerHTML]="item.safeContent"></span>
-  <span
-    *ngIf="(editable$ | async) === true && item.editable === true"
-    [innerHTML]="item.safeContent"
-    (click)="translateOnClick && popover.present()"></span>
-  <ion-modal #popover>
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="popover.dismiss()">abbrechen</ion-button>
-          </ion-buttons>
-          <ion-title>Übersetzen</ion-title>
-          <ion-buttons slot="end">
-            <ion-button
-              (click)="translate(item.original, ta.value); popover.dismiss()"
-              [strong]="true"
-              >OK</ion-button
-            >
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item lines="none"> {{ item.original }}</ion-item>
-        <ion-item lines="none">
-          <ion-textarea
-            #ta
-            [autoGrow]="true"
-            [value]="item.translated"></ion-textarea>
-        </ion-item>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-</ng-container>
+<span
+  *ngIf="(editable$ | async) === false || (editable$ | async) === false"
+  [innerHTML]="translation$ | async"></span>
+<span
+  *ngIf="(editable$ | async) === true && (editable$ | async) === true"
+  [innerHTML]="translation$ | async"
+  (click)="translateOnClick && popover.present()"></span>
+<ion-modal #popover>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="popover.dismiss()">abbrechen</ion-button>
+        </ion-buttons>
+        <ion-title>Übersetzen</ion-title>
+        <ion-buttons slot="end">
+          <ion-button
+            (click)="translate(original, ta.value); popover.dismiss()"
+            [strong]="true"
+            >OK</ion-button
+          >
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item lines="none"> {{ original }}</ion-item>
+      <ion-item lines="none">
+        <ion-textarea
+          #ta
+          [autoGrow]="true"
+          [value]="translation$ | async"></ion-textarea>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

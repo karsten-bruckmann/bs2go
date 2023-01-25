@@ -1,0 +1,109 @@
+<ng-container *ngIf="roster$ | async as roster">
+  <ng-container *ngIf="detachment$ | async as detachment">
+    <ng-container *ngIf="unit$ | async as unit">
+      <ion-text color="primary">
+        <h2><app-translatable [text]="detachment.title"></app-translatable></h2>
+      </ion-text>
+      <ion-text color="primary">
+        <h3><app-translatable [text]="unit.title"></app-translatable></h3>
+      </ion-text>
+
+      <ng-container *ngFor="let model of unit.models">
+        <ion-text color="primary">
+          <h4>
+            {{ model.amount }} x
+            <app-translatable [text]="model.title"></app-translatable>
+          </h4>
+        </ion-text>
+
+        <table class="aligned">
+          <tr>
+            <th *ngIf="model.profiles.length > 1"></th>
+            <th><app-translatable [text]="'M'"></app-translatable></th>
+            <th><app-translatable [text]="'WS'"></app-translatable></th>
+            <th><app-translatable [text]="'BS'"></app-translatable></th>
+            <th><app-translatable [text]="'S'"></app-translatable></th>
+            <th><app-translatable [text]="'T'"></app-translatable></th>
+            <th><app-translatable [text]="'W'"></app-translatable></th>
+            <th><app-translatable [text]="'A'"></app-translatable></th>
+            <th><app-translatable [text]="'Ld'"></app-translatable></th>
+            <th><app-translatable [text]="'Sv'"></app-translatable></th>
+          </tr>
+          <tr *ngFor="let profile of model.profiles">
+            <td *ngIf="model.profiles.length > 1">
+              <app-translatable [text]="profile.title"></app-translatable>
+            </td>
+            <td>
+              {{ profile.movement }}
+            </td>
+            <td>
+              {{ profile.weaponSkill }}
+            </td>
+            <td>
+              {{ profile.ballisticSkill }}
+            </td>
+            <td>
+              {{ profile.strength }}
+            </td>
+            <td>
+              {{ profile.toughness }}
+            </td>
+            <td>
+              {{ profile.wounds }}
+            </td>
+            <td>
+              {{ profile.attacks }}
+            </td>
+            <td>
+              {{ profile.leadership }}
+            </td>
+            <td>{{ profile.save }}</td>
+          </tr>
+        </table>
+
+        <table class="aligned">
+          <tr>
+            <th colspan="2"></th>
+            <th><app-translatable [text]="'Range'"></app-translatable></th>
+            <th><app-translatable [text]="'Type'"></app-translatable></th>
+            <th><app-translatable [text]="'S'"></app-translatable></th>
+            <th><app-translatable [text]="'AP'"></app-translatable></th>
+            <th><app-translatable [text]="'D'"></app-translatable></th>
+            <th><app-translatable [text]="'Abilities'"></app-translatable></th>
+          </tr>
+          <tr *ngFor="let weapon of model.weapons">
+            <td>
+              {{ weapon.amount }}
+            </td>
+            <td><app-translatable [text]="weapon.title"></app-translatable></td>
+            <td>{{ weapon.range }}</td>
+            <td>{{ weapon.type }}</td>
+            <td>{{ weapon.strength }}</td>
+            <td>{{ weapon.armourPenetration }}</td>
+            <td>{{ weapon.damage }}</td>
+            <td class="wrap">
+              <app-translatable [text]="weapon.abilities"></app-translatable>
+            </td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <th><app-translatable [text]="'Rule'"></app-translatable></th>
+            <th>
+              <app-translatable [text]="'Description'"></app-translatable>
+            </th>
+          </tr>
+          <tr *ngFor="let ability of model.abilities">
+            <td>
+              <app-translatable [text]="ability.title"></app-translatable>
+            </td>
+            <td class="wrap">
+              <app-translatable [text]="ability.description"></app-translatable>
+            </td>
+          </tr>
+        </table>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>

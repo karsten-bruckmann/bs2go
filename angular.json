@@ -109,6 +109,7 @@
               "browserTarget": "battle-cards:build:production"
             },
             "development": {
+              "host": "127.0.0.1",
               "browserTarget": "battle-cards:build:development"
             }
           },

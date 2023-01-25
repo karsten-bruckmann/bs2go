@@ -3,8 +3,12 @@
   // margin-right: 5px;
 }
 
-span:not(:first-of-type) {
-  padding-left: 5px;
+span {
+  white-space: pre-wrap;
+}
+
+ion-item {
+  white-space: pre-wrap;
 }
 
 ion-textarea {

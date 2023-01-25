@@ -1,0 +1,66 @@
+<ion-fab slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab-button id="list-button">
+    <ion-icon name="list"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-modal
+  [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]"
+  trigger="list-button"
+  #modal>
+  <ng-template>
+    <ion-header *ngIf="roster$ | async as roster">
+      <ion-toolbar>
+        <ion-title
+          ><app-translatable
+            [text]="roster.title"
+            [translateOnClick]="false"></app-translatable
+        ></ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="modal.dismiss()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content *ngIf="roster$ | async as roster" class="ion-padding">
+      <div class="detachment" *ngFor="let detachment of roster.detachments">
+        <ion-text color="primary">
+          <h2>
+            <app-translatable
+              [text]="detachment.title"
+              [translateOnClick]="false"></app-translatable>
+          </h2>
+        </ion-text>
+        <div
+          class="unit"
+          *ngFor="let unit of detachment.units"
+          (click)="
+            showSection(roster.title, detachment.title, unit.title);
+            modal.dismiss()
+          ">
+          <ion-text color="primary">
+            <h4>
+              <app-translatable
+                [text]="unit.title"
+                [translateOnClick]="false"></app-translatable>
+            </h4>
+          </ion-text>
+        </div>
+      </div>
+
+      <!-- <div class="summary" *ngFor="let summary of roster.summaries">
+        <ion-text
+          color="primary"
+          (click)="modal.dismiss(); showSummary(summary.name)">
+          <h2>
+            <app-translatable
+              [text]="summary.name"
+              [translateOnClick]="false"></app-translatable>
+          </h2>
+        </ion-text>
+      </div> -->
+    </ion-content>
+  </ng-template>
+</ion-modal>

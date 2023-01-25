@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export interface SectionSheet {
-  type: 'section';
-  force: string;
-  category: string;
-  section: string;
+export interface UnitSheet {
+  type: 'unit';
+  roster: string;
+  detachment: string;
+  unit: string;
 }
 
 export interface SummarySheet {
   type: 'summary';
+  roster: string;
   summary: string;
 }
 
-export type Sheet = { rooster: string } & (SectionSheet | SummarySheet);
+export type Sheet = UnitSheet | SummarySheet;
 
 @Injectable({ providedIn: 'root' })
 export class StateService {
@@ -36,20 +37,20 @@ export class StateService {
     }
   }
 
-  private _rooster$ = new BehaviorSubject<string | undefined>(
-    localStorage.getItem('rooster')
-      ? JSON.parse(localStorage.getItem('rooster') || '')
+  private _roster$ = new BehaviorSubject<string | undefined>(
+    localStorage.getItem('roster')
+      ? JSON.parse(localStorage.getItem('roster') || '')
       : undefined
   );
 
-  public get rooster$() {
-    return this._rooster$.asObservable();
+  public get roster$() {
+    return this._roster$.asObservable();
   }
 
-  public setRooster(rooster: string) {
+  public setRoster(roster: string) {
     this.setSheet(undefined);
-    this._rooster$.next(rooster);
-    localStorage.setItem('rooster', JSON.stringify(rooster));
+    this._roster$.next(roster);
+    localStorage.setItem('roster', JSON.stringify(roster));
   }
 
   private _translationsEditMode$ = new BehaviorSubject<boolean>(
