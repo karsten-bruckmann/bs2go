@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { IonicModule } from '@ionic/angular';
 import { filter } from 'rxjs';
@@ -21,8 +21,8 @@ import { RosterComponent } from './components/sheet/sheet.component';
   ],
 })
 export class AppComponent {
-  constructor(updates: SwUpdate) {
-    updates.versionUpdates
+  constructor(@Optional() updates?: SwUpdate) {
+    updates?.versionUpdates
       .pipe(
         filter((evt): evt is VersionReadyEvent => evt.type === 'VERSION_READY')
       )
