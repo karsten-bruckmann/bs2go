@@ -122,9 +122,13 @@ class Parser {
   }
 
   private toForceArray(
-    bsForces: Array<{ force: BSForce[] } | string>
+    bsForces: Array<{ force: BSForce[] } | string> | undefined
   ): Force[] {
     const forces: Force[] = [];
+
+    if (!bsForces) {
+      return [];
+    }
 
     bsForces.forEach(bsForces => {
       if (isBSForce(bsForces)) {
@@ -166,8 +170,12 @@ class Parser {
   }
 
   private toCategoryArray(
-    bsCategories: Array<{ category: BSCategory[] } | string>
+    bsCategories: Array<{ category: BSCategory[] } | string> | undefined
   ): Category[] {
+    if (!bsCategories) {
+      return [];
+    }
+
     const categories: Category[] = [];
     bsCategories.forEach(bsCategories => {
       if (isBSCategory(bsCategories)) {
@@ -183,8 +191,14 @@ class Parser {
     return categories;
   }
 
-  private toRuleArray(bsRules: Array<{ rule: BSRule[] } | string>): Rule[] {
+  private toRuleArray(
+    bsRules: Array<{ rule: BSRule[] } | string> | undefined
+  ): Rule[] {
     const rules: Rule[] = [];
+
+    if (!bsRules) {
+      return [];
+    }
 
     bsRules.forEach(bsRules => {
       if (isBSRule(bsRules)) {
@@ -201,8 +215,12 @@ class Parser {
   }
 
   private toSelectionArray(
-    bsSelections: Array<{ selection: BSSelection[] } | string>
+    bsSelections: Array<{ selection: BSSelection[] } | string> | undefined
   ): Selection[] {
+    if (!bsSelections) {
+      return [];
+    }
+
     const selections: Selection[] = [];
     bsSelections.forEach(bsSelections => {
       if (isBSSelection(bsSelections)) {
@@ -232,8 +250,14 @@ class Parser {
   }
 
   private toProfileArray(
-    bsProfiles: Array<{ profile: BSProfile<BSCharacteristic>[] } | string>
+    bsProfiles:
+      | Array<{ profile: BSProfile<BSCharacteristic>[] } | string>
+      | undefined
   ): Profile<TypeName>[] {
+    if (!bsProfiles) {
+      return [];
+    }
+
     const profiles: Profile<TypeName>[] = [];
     bsProfiles.forEach(bsProfiles => {
       if (isBSProfile(bsProfiles)) {
