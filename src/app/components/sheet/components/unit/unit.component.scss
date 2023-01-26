@@ -38,15 +38,15 @@ h3 {
 }
 
 table {
-  width: calc(100% - 20px);
+  width: calc(100% - 10px);
   border-collapse: collapse;
-  margin: 0 10px 30px 10px;
+  margin: 0 5px 30px 5px;
 }
 
 td,
 th {
   border: 0.55px solid var(--ion-color-medium);
-  padding: 5px 10px;
+  padding: 3px 8px;
   vertical-align: top;
 
   &.centered {
@@ -90,5 +90,5 @@ div.scroller {
 .separated {
   border-top: 5px dashed var(--ion-color-primary);
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
