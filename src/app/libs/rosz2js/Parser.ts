@@ -82,7 +82,9 @@ class Parser {
   }
 
   private toCostArray(
-    bsCosts: Array<{ cost: BSCost[] } | { costLimit: BSCost[] } | string>,
+    bsCosts:
+      | Array<{ cost: BSCost[] } | { costLimit: BSCost[] } | string>
+      | undefined,
     additionalCosts: CalculatedCosts = {
       [CostType.PTS]: 0,
       [CostType.PL]: 0,
@@ -91,32 +93,34 @@ class Parser {
   ): Cost[] {
     const costs: Cost[] = [];
 
-    bsCosts.forEach(bsCosts => {
-      (isBSCost(bsCosts)
-        ? bsCosts.cost
-        : isBSCostLimit(bsCosts)
-        ? bsCosts.costLimit
-        : []
-      ).forEach(bsCost => {
-        let name: CostType;
-        switch (bsCost.$.name) {
-          case BSCostType.PTS:
-            name = CostType.PTS;
-            break;
-          case BSCostType.CP:
-            name = CostType.CP;
-            break;
-          case BSCostType.PL:
-          default:
-            name = CostType.PL;
-        }
+    if (bsCosts) {
+      bsCosts.forEach(bsCosts => {
+        (isBSCost(bsCosts)
+          ? bsCosts.cost
+          : isBSCostLimit(bsCosts)
+          ? bsCosts.costLimit
+          : []
+        ).forEach(bsCost => {
+          let name: CostType;
+          switch (bsCost.$.name) {
+            case BSCostType.PTS:
+              name = CostType.PTS;
+              break;
+            case BSCostType.CP:
+              name = CostType.CP;
+              break;
+            case BSCostType.PL:
+            default:
+              name = CostType.PL;
+          }
 
-        costs.push({
-          value: +bsCost.$.value + additionalCosts[name],
-          name,
+          costs.push({
+            value: +bsCost.$.value + additionalCosts[name],
+            name,
+          });
         });
       });
-    });
+    }
 
     return costs;
   }

@@ -17,50 +17,52 @@
         </ion-text>
 
         <!-- PROFILES -->
-        <table class="aligned">
-          <tr>
-            <th *ngIf="model.profiles.length > 1"></th>
-            <th><app-translatable [text]="'M'"></app-translatable></th>
-            <th><app-translatable [text]="'WS'"></app-translatable></th>
-            <th><app-translatable [text]="'BS'"></app-translatable></th>
-            <th><app-translatable [text]="'S'"></app-translatable></th>
-            <th><app-translatable [text]="'T'"></app-translatable></th>
-            <th><app-translatable [text]="'W'"></app-translatable></th>
-            <th><app-translatable [text]="'A'"></app-translatable></th>
-            <th><app-translatable [text]="'Ld'"></app-translatable></th>
-            <th><app-translatable [text]="'Sv'"></app-translatable></th>
-          </tr>
-          <tr *ngFor="let profile of model.profiles">
-            <td *ngIf="model.profiles.length > 1">
-              <app-translatable [text]="profile.title"></app-translatable>
-            </td>
-            <td class="centered">
-              {{ profile.movement }}
-            </td>
-            <td class="centered">
-              {{ profile.weaponSkill }}
-            </td>
-            <td class="centered">
-              {{ profile.ballisticSkill }}
-            </td>
-            <td class="centered">
-              {{ profile.strength }}
-            </td>
-            <td class="centered">
-              {{ profile.toughness }}
-            </td>
-            <td class="centered">
-              {{ profile.wounds }}
-            </td>
-            <td class="centered">
-              {{ profile.attacks }}
-            </td>
-            <td class="centered">
-              {{ profile.leadership }}
-            </td>
-            <td>{{ profile.save }}</td>
-          </tr>
-        </table>
+        <div class="scroller">
+          <table class="aligned">
+            <tr>
+              <th *ngIf="model.profiles.length > 1"></th>
+              <th><app-translatable [text]="'M'"></app-translatable></th>
+              <th><app-translatable [text]="'WS'"></app-translatable></th>
+              <th><app-translatable [text]="'BS'"></app-translatable></th>
+              <th><app-translatable [text]="'S'"></app-translatable></th>
+              <th><app-translatable [text]="'T'"></app-translatable></th>
+              <th><app-translatable [text]="'W'"></app-translatable></th>
+              <th><app-translatable [text]="'A'"></app-translatable></th>
+              <th><app-translatable [text]="'Ld'"></app-translatable></th>
+              <th><app-translatable [text]="'Sv'"></app-translatable></th>
+            </tr>
+            <tr *ngFor="let profile of model.profiles">
+              <td *ngIf="model.profiles.length > 1">
+                <app-translatable [text]="profile.title"></app-translatable>
+              </td>
+              <td class="centered">
+                {{ profile.movement }}
+              </td>
+              <td class="centered">
+                {{ profile.weaponSkill }}
+              </td>
+              <td class="centered">
+                {{ profile.ballisticSkill }}
+              </td>
+              <td class="centered">
+                {{ profile.strength }}
+              </td>
+              <td class="centered">
+                {{ profile.toughness }}
+              </td>
+              <td class="centered">
+                {{ profile.wounds }}
+              </td>
+              <td class="centered">
+                {{ profile.attacks }}
+              </td>
+              <td class="centered">
+                {{ profile.leadership }}
+              </td>
+              <td>{{ profile.save }}</td>
+            </tr>
+          </table>
+        </div>
 
         <!-- WEAPONS -->
         <div class="scroller">
@@ -140,24 +142,67 @@
           </table>
         </div>
 
-        <!-- RULES -->
+        <!-- PSYCHIC POWERS -->
+        <div class="scroller" *ngIf="model.psychicPowers.length > 0">
+          <table class="aligned">
+            <tr>
+              <th></th>
+              <th><app-translatable [text]="'Range'"></app-translatable></th>
+              <th>
+                <app-translatable [text]="'Warp Charge'"></app-translatable>
+              </th>
+              <th>
+                <app-translatable [text]="'Description'"></app-translatable>
+              </th>
+            </tr>
+            <ng-container *ngFor="let power of model.psychicPowers">
+              <tr *ngIf="power.profiles.length === 1; else multiProfilePower">
+                <td>
+                  {{ power.title }}
+                </td>
+                <td class="centered">{{ power.profiles[0].range }}</td>
+                <td class="centered">{{ power.profiles[0].warpCharge }}</td>
+                <td class="wrap long">{{ power.profiles[0].description }}</td>
+              </tr>
+              <ng-template #multiProfilePower>
+                <tr>
+                  <td colspan="4">
+                    {{ power.title }}
+                  </td>
+                </tr>
+                <tr *ngFor="let profile of power.profiles" class="sub-profile">
+                  <td></td>
+                  <td>
+                    <app-translatable [text]="profile.title"></app-translatable>
+                  </td>
+                  <td class="centered">{{ profile.range }}</td>
+                  <td class="centered">{{ profile.warpCharge }}</td>
+                  <td class="wrap long">{{ profile.description }}</td>
+                </tr>
+              </ng-template>
+            </ng-container>
+          </table>
+        </div>
+      </ng-container>
+
+      <!-- UNIT RULES -->
+      <ion-text color="primary">
+        <h3 class="separated">
+          <app-translatable [text]="'Rules'"></app-translatable>
+        </h3>
+      </ion-text>
+      <div class="scroller">
         <table>
-          <tr>
-            <th><app-translatable [text]="'Rule'"></app-translatable></th>
-            <th>
-              <app-translatable [text]="'Description'"></app-translatable>
-            </th>
-          </tr>
-          <tr *ngFor="let ability of model.abilities">
-            <td>
-              <app-translatable [text]="ability.title"></app-translatable>
+          <tr *ngFor="let rule of unit.rules">
+            <td class="wrap">
+              <app-translatable [text]="rule.title"></app-translatable>
             </td>
             <td class="wrap long">
-              <app-translatable [text]="ability.description"></app-translatable>
+              <app-translatable [text]="rule.description"></app-translatable>
             </td>
           </tr>
         </table>
-      </ng-container>
+      </div>
     </ng-container>
   </ng-container>
 </ng-container>

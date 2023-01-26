@@ -86,3 +86,9 @@ tr.sub-profile {
 div.scroller {
   overflow-x: auto;
 }
+
+.separated {
+  border-top: 5px dashed var(--ion-color-primary);
+  margin-top: 30px;
+  margin-bottom: 10px;
+}

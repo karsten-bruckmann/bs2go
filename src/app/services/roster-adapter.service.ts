@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   AbilityProfile,
   Force as BsForce,
+  PsychicPowerProfile,
   Roster as BSRoster,
   Selection as BsSelection,
   TypeName,
@@ -9,10 +10,11 @@ import {
   WeaponProfile,
 } from '../libs/rosz2js/types';
 import {
-  Ability,
   Model,
   Profile,
+  PsychicPower,
   Roster,
+  Rule,
   Unit,
   Weapon,
 } from '../models/roster.model';
@@ -34,11 +36,12 @@ export class RosterAdapterService {
       .filter(selection => ['unit', 'model'].includes(selection.type))
       .map(selection => ({
         title: selection.name,
-        models: this.getModels(selection, detachment),
+        models: this.getModels(selection),
+        rules: this.getUnitRules(detachment, selection),
       }));
   }
 
-  private getModels(unit: BsSelection, detachment: BsForce): Model[] {
+  private getModels(unit: BsSelection): Model[] {
     if (unit.type === 'model') {
       return [
         {
@@ -46,20 +49,27 @@ export class RosterAdapterService {
           amount: 1,
           profiles: this.getProfiles(unit),
           weapons: this.getWeapons(unit),
-          abilities: this.getAbilities(detachment, unit),
+          psychicPowers: this.getPsychicPowers(unit),
         },
       ];
     }
 
+    const unitProfiles = this.getProfiles(unit);
+
     const models = unit.selections
       .filter(selection => ['unit', 'model'].includes(selection.type))
-      .map(selection => ({
-        title: selection.name,
-        amount: selection.number,
-        profiles: this.getProfiles(selection),
-        weapons: this.getWeapons(selection),
-        abilities: this.getAbilities(detachment, unit, selection),
-      }));
+      .map(selection => {
+        const modelProfiles = this.getProfiles(selection);
+        const profiles =
+          modelProfiles.length > 0 ? modelProfiles : unitProfiles;
+        return {
+          title: selection.name,
+          amount: selection.number,
+          profiles: profiles,
+          weapons: this.getWeapons(selection),
+          psychicPowers: this.getPsychicPowers(selection),
+        };
+      });
 
     return this.deduplicateModels(models);
   }
@@ -119,15 +129,36 @@ export class RosterAdapterService {
       }));
   }
 
-  private getAbilities(
-    detachment: BsForce,
-    unit: BsSelection,
-    model?: BsSelection
-  ): Ability[] {
+  private getPsychicPowers(unit: BsSelection): PsychicPower[] {
+    return unit.selections
+      .filter(
+        selection =>
+          selection.type === 'upgrade' &&
+          selection.profiles.filter(
+            (profile): profile is PsychicPowerProfile =>
+              profile.typeName === TypeName.PSYCHIC_POWER
+          ).length > 0
+      )
+      .map(selection => ({
+        title: selection.name,
+        profiles: selection.profiles
+          .filter(
+            (profile): profile is PsychicPowerProfile =>
+              profile.typeName === TypeName.PSYCHIC_POWER
+          )
+          .map(profile => ({
+            title: profile.name,
+            range: profile.range,
+            warpCharge: profile.warpCharge,
+            description: profile.details,
+          })),
+      }));
+  }
+
+  private getUnitRules(detachment: BsForce, unit: BsSelection): Rule[] {
     const mergedProfiles = (<AbilityProfile[]>[]).concat(
       this.getAbilityProfiles(detachment),
-      this.getAbilityProfiles(unit),
-      model ? this.getAbilityProfiles(model) : []
+      this.getAbilityProfiles(unit)
     );
 
     return mergedProfiles

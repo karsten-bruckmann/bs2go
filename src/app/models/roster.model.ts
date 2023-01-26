@@ -17,6 +17,7 @@ export interface Costs {
 export interface Unit {
   title: string;
   models: Model[];
+  rules: Rule[];
 }
 
 export interface Model {
@@ -24,7 +25,7 @@ export interface Model {
   amount: number;
   profiles: Profile[];
   weapons: Weapon[];
-  abilities: Ability[];
+  psychicPowers: PsychicPower[];
 }
 
 export interface Profile {
@@ -47,6 +48,11 @@ export interface Weapon {
   profiles: WeaponProfile[];
 }
 
+export interface PsychicPower {
+  title: string;
+  profiles: PsychicPowerProfile[];
+}
+
 export interface WeaponProfile {
   title: string;
   range: string;
@@ -56,8 +62,14 @@ export interface WeaponProfile {
   damage: string;
   abilities: string;
 }
+export interface PsychicPowerProfile {
+  title: string;
+  range: string;
+  warpCharge: string;
+  description: string;
+}
 
-export interface Ability {
+export interface Rule {
   title: string;
   description: string;
 }
