@@ -2,7 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
-import { combineLatest, map, Observable, shareReplay } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  Observable,
+  shareReplay,
+} from 'rxjs';
 import { StateService } from '../../services/state.service';
 import { TranslationsService } from '../../services/translations.service';
 
@@ -22,6 +28,7 @@ export class TranslatableComponent implements OnChanges {
 
   @Input() public set text(text: string) {
     this.original = text;
+    this.hasTextChars$.next(!!text.match('[a-zA-Z]+'));
     return;
   }
 
@@ -31,10 +38,18 @@ export class TranslatableComponent implements OnChanges {
 
   public translation$?: Observable<string>;
 
+  private hasTextChars$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   public editable$ = combineLatest([
     this.state.translationsEditMode$,
     this.translationService.translatable$,
-  ]).pipe(map(([editMode, translatable]) => editMode && translatable));
+    this.hasTextChars$,
+  ]).pipe(
+    map(
+      ([editMode, translatable, hasTextChars]) =>
+        editMode && translatable && hasTextChars
+    )
+  );
 
   ngOnChanges(changes: SimpleChanges): void {
     const textChange = changes['text'];

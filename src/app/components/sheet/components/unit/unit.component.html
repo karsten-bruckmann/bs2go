@@ -36,30 +36,35 @@
                 <app-translatable [text]="profile.title"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.movement }}
+                <app-translatable [text]="profile.movement"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.weaponSkill }}
+                <app-translatable
+                  [text]="profile.weaponSkill"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.ballisticSkill }}
+                <app-translatable
+                  [text]="profile.ballisticSkill"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.strength }}
+                <app-translatable [text]="profile.strength"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.toughness }}
+                <app-translatable [text]="profile.toughness"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.wounds }}
+                <app-translatable [text]="profile.wounds"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.attacks }}
+                <app-translatable [text]="profile.attacks"></app-translatable>
               </td>
               <td class="centered">
-                {{ profile.leadership }}
+                <app-translatable
+                  [text]="profile.leadership"></app-translatable>
               </td>
-              <td>{{ profile.save }}</td>
+              <td>
+                <app-translatable [text]="profile.save"></app-translatable>
+              </td>
             </tr>
           </table>
         </div>
@@ -87,20 +92,32 @@
                 <td>
                   {{ weapon.amount }}
                 </td>
-                <td>
+                <td class="wrap">
                   <app-translatable [text]="weapon.title"></app-translatable>
                 </td>
-                <td class="centered">{{ weapon.profiles[0].range }}</td>
+                <td class="centered">
+                  <app-translatable
+                    [text]="weapon.profiles[0].range"></app-translatable>
+                </td>
                 <td class="centered">
                   <app-translatable
                     [text]="weapon.profiles[0].type"></app-translatable>
                 </td>
-                <td class="centered">{{ weapon.profiles[0].strength }}</td>
                 <td class="centered">
-                  {{ weapon.profiles[0].armourPenetration }}
+                  <app-translatable
+                    [text]="weapon.profiles[0].strength"></app-translatable>
                 </td>
-                <td class="centered">{{ weapon.profiles[0].damage }}</td>
-                <td class="wrap long">
+                <td class="centered">
+                  <app-translatable
+                    [text]="
+                      weapon.profiles[0].armourPenetration
+                    "></app-translatable>
+                </td>
+                <td class="centered">
+                  <app-translatable
+                    [text]="weapon.profiles[0].damage"></app-translatable>
+                </td>
+                <td class="wrap">
                   <app-translatable
                     [text]="weapon.profiles[0].abilities"></app-translatable>
                 </td>
@@ -111,7 +128,7 @@
                     {{ weapon.amount }}
                   </td>
                   <td>
-                    {{ weapon.title }}
+                    <app-translatable [text]="weapon.title"></app-translatable>
                   </td>
                   <td colspan="6" class="wrap">
                     <app-translatable
@@ -123,15 +140,24 @@
                   <td>
                     <app-translatable [text]="profile.title"></app-translatable>
                   </td>
-                  <td class="centered">{{ profile.range }}</td>
+                  <td class="centered">
+                    <app-translatable [text]="profile.range"></app-translatable>
+                  </td>
                   <td class="centered">
                     <app-translatable [text]="profile.type"></app-translatable>
                   </td>
-                  <td class="centered">{{ profile.strength }}</td>
                   <td class="centered">
-                    {{ profile.armourPenetration }}
+                    <app-translatable
+                      [text]="profile.strength"></app-translatable>
                   </td>
-                  <td class="centered">{{ profile.damage }}</td>
+                  <td class="centered">
+                    <app-translatable
+                      [text]="profile.armourPenetration"></app-translatable>
+                  </td>
+                  <td class="centered">
+                    <app-translatable
+                      [text]="profile.damage"></app-translatable>
+                  </td>
                   <td class="wrap long">
                     <app-translatable
                       [text]="profile.abilities"></app-translatable>
@@ -157,17 +183,26 @@
             </tr>
             <ng-container *ngFor="let power of model.psychicPowers">
               <tr *ngIf="power.profiles.length === 1; else multiProfilePower">
-                <td>
-                  {{ power.title }}
+                <td class="wrap">
+                  <app-translatable [text]="power.title"></app-translatable>
                 </td>
-                <td class="centered">{{ power.profiles[0].range }}</td>
-                <td class="centered">{{ power.profiles[0].warpCharge }}</td>
-                <td class="wrap long">{{ power.profiles[0].description }}</td>
+                <td>
+                  <app-translatable
+                    [text]="power.profiles[0].range"></app-translatable>
+                </td>
+                <td>
+                  <app-translatable
+                    [text]="power.profiles[0].warpCharge"></app-translatable>
+                </td>
+                <td class="wrap long">
+                  <app-translatable
+                    [text]="power.profiles[0].description"></app-translatable>
+                </td>
               </tr>
               <ng-template #multiProfilePower>
                 <tr>
                   <td colspan="4">
-                    {{ power.title }}
+                    <app-translatable [text]="power.title"></app-translatable>
                   </td>
                 </tr>
                 <tr *ngFor="let profile of power.profiles" class="sub-profile">
@@ -175,9 +210,17 @@
                   <td>
                     <app-translatable [text]="profile.title"></app-translatable>
                   </td>
-                  <td class="centered">{{ profile.range }}</td>
-                  <td class="centered">{{ profile.warpCharge }}</td>
-                  <td class="wrap long">{{ profile.description }}</td>
+                  <td>
+                    <app-translatable [text]="profile.range"></app-translatable>
+                  </td>
+                  <td>
+                    <app-translatable
+                      [text]="profile.warpCharge"></app-translatable>
+                  </td>
+                  <td>
+                    <app-translatable
+                      [text]="profile.description"></app-translatable>
+                  </td>
                 </tr>
               </ng-template>
             </ng-container>
