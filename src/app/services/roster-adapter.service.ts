@@ -35,7 +35,7 @@ export class RosterAdapterService {
     return detachment.selections
       .filter(selection => ['unit', 'model'].includes(selection.type))
       .map(selection => ({
-        title: selection.name,
+        title: selection.customName || selection.name,
         models: this.getModels(selection),
         rules: this.getUnitRules(detachment, selection),
       }));
@@ -45,7 +45,7 @@ export class RosterAdapterService {
     if (unit.type === 'model') {
       return [
         {
-          title: unit.name,
+          title: unit.customName || unit.name,
           amount: 1,
           profiles: this.getProfiles(unit),
           weapons: this.getWeapons(unit),
@@ -63,7 +63,7 @@ export class RosterAdapterService {
         const profiles =
           modelProfiles.length > 0 ? modelProfiles : unitProfiles;
         return {
-          title: selection.name,
+          title: selection.customName || selection.name,
           amount: selection.number,
           profiles: profiles,
           weapons: this.getWeapons(selection),
@@ -104,7 +104,7 @@ export class RosterAdapterService {
           ).length > 0
       )
       .map(selection => ({
-        title: selection.name,
+        title: selection.customName || selection.name,
         amount: selection.number,
         abilities: selection.profiles
           .filter(
@@ -140,7 +140,7 @@ export class RosterAdapterService {
           ).length > 0
       )
       .map(selection => ({
-        title: selection.name,
+        title: selection.customName || selection.name,
         profiles: selection.profiles
           .filter(
             (profile): profile is PsychicPowerProfile =>
