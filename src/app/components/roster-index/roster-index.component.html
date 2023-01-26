@@ -5,6 +5,7 @@
 </ion-fab>
 
 <ion-modal
+  *ngIf="view$ | async as view"
   [initialBreakpoint]="1"
   [breakpoints]="[0, 1]"
   trigger="list-button"
@@ -12,6 +13,18 @@
   <ng-template>
     <ion-header *ngIf="roster$ | async as roster">
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button
+            (click)="setView('list')"
+            [color]="view === 'list' ? 'primary' : 'medium'">
+            <ion-icon name="list-outline"></ion-icon>
+          </ion-button>
+          <ion-button
+            (click)="setView('grid')"
+            [color]="view === 'grid' ? 'primary' : 'medium'">
+            <ion-icon name="grid-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
         <ion-title
           ><app-translatable
             [text]="roster.title"
@@ -34,33 +47,28 @@
           </h2>
         </ion-text>
         <div
-          class="unit"
-          *ngFor="let unit of detachment.units"
-          (click)="
-            showSection(roster.title, detachment.title, unit.title);
-            modal.dismiss()
-          ">
-          <ion-text color="primary">
-            <h4>
-              <app-translatable
-                [text]="unit.title"
-                [translateOnClick]="false"></app-translatable>
-            </h4>
-          </ion-text>
+          class="units"
+          [ngClass]="{ list: view === 'list', grid: view === 'grid' }">
+          <div
+            class="unit"
+            *ngFor="let unit of detachment.units"
+            (click)="
+              showSection(roster.title, detachment.title, unit.title);
+              modal.dismiss()
+            ">
+            <ion-text color="primary">
+              <app-unit-image
+                *ngIf="view === 'grid'"
+                [unitName]="unit.title"></app-unit-image>
+              <h4>
+                <app-translatable
+                  [text]="unit.title"
+                  [translateOnClick]="false"></app-translatable>
+              </h4>
+            </ion-text>
+          </div>
         </div>
       </div>
-
-      <!-- <div class="summary" *ngFor="let summary of roster.summaries">
-        <ion-text
-          color="primary"
-          (click)="modal.dismiss(); showSummary(summary.name)">
-          <h2>
-            <app-translatable
-              [text]="summary.name"
-              [translateOnClick]="false"></app-translatable>
-          </h2>
-        </ion-text>
-      </div> -->
     </ion-content>
   </ng-template>
 </ion-modal>

@@ -6,11 +6,17 @@ import { Detachment, Roster, Unit } from '../../../../models/roster.model';
 import { RostersService } from '../../../../services/rosters.service';
 import { StateService, UnitSheet } from '../../../../services/state.service';
 import { TranslatableComponent } from '../../../translatable/translatable.component';
+import { UnitImageComponent } from '../../../unit-image/unit-image.component';
 
 @Component({
   selector: 'sheet-unit',
   standalone: true,
-  imports: [CommonModule, IonicModule, TranslatableComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslatableComponent,
+    UnitImageComponent,
+  ],
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.scss'],
 })

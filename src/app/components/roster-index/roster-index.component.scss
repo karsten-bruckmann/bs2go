@@ -9,9 +9,27 @@
     color: var(--ion-color-medium);
   }
 
-  .unit {
-    margin-top: 10px;
-    padding-left: 10px;
+  .units {
+    .unit {
+      margin-top: 10px;
+      padding-left: 10px;
+    }
+
+    &.grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .unit {
+        width: 33%;
+        padding: 10px;
+        text-align: center;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
   }
 }
 

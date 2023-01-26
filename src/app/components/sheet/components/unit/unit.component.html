@@ -1,6 +1,10 @@
 <ng-container *ngIf="roster$ | async as roster">
   <ng-container *ngIf="detachment$ | async as detachment">
     <ng-container *ngIf="unit$ | async as unit">
+      <app-unit-image
+        [editable]="true"
+        [unitName]="unit.title"></app-unit-image>
+
       <ion-text color="primary">
         <h2><app-translatable [text]="detachment.title"></app-translatable></h2>
       </ion-text>
