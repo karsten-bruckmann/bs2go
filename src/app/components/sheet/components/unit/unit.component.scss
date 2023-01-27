@@ -99,3 +99,8 @@ app-unit-image {
   right: 5px;
   width: 126px;
 }
+
+.dimmed {
+  background: var(--ion-color-light);
+  font-style: italic;
+}

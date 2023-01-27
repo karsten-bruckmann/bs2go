@@ -83,9 +83,6 @@
               <th><app-translatable [text]="'S'"></app-translatable></th>
               <th><app-translatable [text]="'AP'"></app-translatable></th>
               <th><app-translatable [text]="'D'"></app-translatable></th>
-              <th>
-                <app-translatable [text]="'Abilities'"></app-translatable>
-              </th>
             </tr>
             <ng-container *ngFor="let weapon of model.weapons">
               <tr
@@ -93,7 +90,10 @@
                   weapon.abilities.length === 0 && weapon.profiles.length === 1;
                   else multiProfileWeapon
                 ">
-                <td>
+                <td
+                  [attr.rowspan]="
+                    (weapon.profiles[0].abilities | cleanEmpty) ? 2 : 1
+                  ">
                   {{ weapon.amount }}
                 </td>
                 <td class="wrap">
@@ -121,7 +121,9 @@
                   <app-translatable
                     [text]="weapon.profiles[0].damage"></app-translatable>
                 </td>
-                <td class="wrap">
+              </tr>
+              <tr *ngIf="weapon.profiles[0].abilities | cleanEmpty">
+                <td class="wrap dimmed" colspan="6">
                   <app-translatable
                     [text]="weapon.profiles[0].abilities"></app-translatable>
                 </td>

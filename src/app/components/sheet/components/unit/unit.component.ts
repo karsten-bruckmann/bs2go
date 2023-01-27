@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { combineLatest, filter, map, switchMap } from 'rxjs';
 import { Detachment, Roster, Unit } from '../../../../models/roster.model';
+import { CleanEmptyPipe } from '../../../../pipes/clean-empty.pipe';
 import { RostersService } from '../../../../services/rosters.service';
 import { StateService, UnitSheet } from '../../../../services/state.service';
 import { TranslatableComponent } from '../../../translatable/translatable.component';
@@ -16,6 +17,7 @@ import { UnitImageComponent } from '../../../unit-image/unit-image.component';
     IonicModule,
     TranslatableComponent,
     UnitImageComponent,
+    CleanEmptyPipe,
   ],
   templateUrl: './unit.component.html',
   styleUrls: ['./unit.component.scss'],
